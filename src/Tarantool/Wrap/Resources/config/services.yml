@@ -1,0 +1,6 @@
+services:
+    tarantool.wrap:
+        class: App\Tarantool\Wrap\Component\Connector
+        arguments:
+            - '@service_container'
+        public: true

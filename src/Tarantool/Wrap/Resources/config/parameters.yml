@@ -1,0 +1,2 @@
+parameters:
+     tarantool.connection: 'tcp://tarantool:3301'
