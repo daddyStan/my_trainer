@@ -22,3 +22,6 @@ yarn-error.log
 .phpunit
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
+/Docker/logs
+/Docker/postgres
+Docker/tarantool
