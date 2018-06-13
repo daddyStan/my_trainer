@@ -1,0 +1,22 @@
+App\Entity\Training:
+    type: entity
+    table: training
+    id:
+        training_id:
+            type: integer
+            generator: { strategy: IDENTITY }
+    fields:
+        training_name:
+            type: string
+            length: 256
+        description:
+            type: string
+            length: 100
+        creation_date:
+            type: datetime
+        last_update_date:
+            type: datetime
+    oneToMany:
+        exercises:
+          targetEntity: App\Entity\Exercise
+          mappedBy: exercise

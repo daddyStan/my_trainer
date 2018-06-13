@@ -33,8 +33,11 @@ services:
         - POSTGRES_USER=root_my_trainer
         - POSTGRES_PASSWORD=er4ddJf4thfHHf34f77
         - POSTGRES_DB=my_trainer
-      expose:
-        - 5432
+      ports:
+        - "5432:5432"
+#        PROD !
+#      expose:
+#        - 5432
 
     tarantool:
         image: tarantool/tarantool:1.7

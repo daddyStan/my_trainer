@@ -1,0 +1,26 @@
+App\Entity\Set:
+    type: entity
+    table: set
+    id:
+        set_id:
+            type: integer
+            generator: { strategy: IDENTITY }
+    fields:
+        comment:
+            type: string
+            length: 100
+        weight:
+            type: float
+        tries:
+            type: integer
+        creation_date:
+            type: datetime
+        last_update_date:
+            type: datetime
+    manyToOne:
+        exercise_id:
+          targetEntity: App\Entity\Exercise
+          inversedBy: sets
+          joinColumn:
+            name: exercise_id
+            referencedColumnName: exercise_id

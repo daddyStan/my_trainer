@@ -1,0 +1,29 @@
+App\Entity\Exercise:
+    type: entity
+    table: exercise
+    id:
+        exercise_id:
+            type: integer
+            generator: { strategy: IDENTITY }
+    fields:
+        exercise_name:
+            type: string
+            length: 256
+        description:
+            type: string
+            length: 100
+        creation_date:
+            type: datetime
+        last_update_date:
+            type: datetime
+    manyToOne:
+        training_id:
+          targetEntity: App\Entity\Training
+          inversedBy: exercises
+          joinColumn:
+            name: training_id
+            referencedColumnName: training_id
+    oneToMany:
+        sets:
+          targetEntity: App\Entity\Set
+          mappedBy: set
