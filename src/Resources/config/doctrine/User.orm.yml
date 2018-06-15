@@ -1,6 +1,6 @@
 App\Entity\User:
     type: entity
-    table: user
+    table: app_user
     id:
         user_id:
             type: integer
@@ -9,15 +9,14 @@ App\Entity\User:
         user_name:
             type: string
             length: 100
-        login:
-            type: string
-            length: 100
         password:
             type: string
-            length: 30
-        salt:
+            length: 254
+        email:
             type: string
-            length: 30
+            length: 254
+        is_active:
+            type: boolean
         registration_date:
             type: datetime
         last_visit_date:

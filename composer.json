@@ -27,14 +27,15 @@
         "tarantool/mapper": "^4.3"
     },
     "require-dev": {
+        "ext-msgpack": "@dev",
+        "doctrine/doctrine-fixtures-bundle": "^3.0",
+        "rybakit/msgpack": "@dev",
         "symfony/debug-pack": "*",
         "symfony/dotenv": "^4.1",
         "symfony/maker-bundle": "^1.0",
         "symfony/profiler-pack": "*",
         "symfony/test-pack": "^1.0",
-        "symfony/web-server-bundle": "^4.1",
-        "ext-msgpack": "@dev",
-        "rybakit/msgpack": "@dev"
+        "symfony/web-server-bundle": "^4.1"
     },
     "config": {
         "preferred-install": {

@@ -25,3 +25,4 @@ yarn-error.log
 /Docker/logs
 /Docker/postgres
 Docker/tarantool
+composer.lock

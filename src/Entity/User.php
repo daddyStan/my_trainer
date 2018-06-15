@@ -3,19 +3,27 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
-class User
+class User implements UserInterface, \Serializable
 {
     private $user_id;
     private $user_name;
     private $login;
     private $password;
+    private $email;
+    private $is_active;
     private $salt;
     private $registration_date;
     private $last_visit_date;
+
+    public function __construct()
+    {
+        $this->isActive = true;
+    }
 
     public function getUserId(): ?int
     {
@@ -60,13 +68,12 @@ class User
 
     public function getSalt(): ?string
     {
-        return $this->salt;
+        return null;
     }
 
-    public function setSalt(string $salt): self
+    public function setSalt(?string $salt): self
     {
         $this->salt = $salt;
-
         return $this;
     }
 
@@ -94,6 +101,57 @@ class User
         return $this;
     }
 
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
 
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function getIsActive(): ?bool
+    {
+        return $this->is_active;
+    }
+
+    public function setIsActive(bool $is_active): self
+    {
+        $this->is_active = $is_active;
+
+        return $this;
+    }
+
+    public function getRoles()
+    {
+        return ['ROLE_USER'];
+    }
+
+    public function eraseCredentials()
+    {
+    }
+
+    /** @see \Serializable::serialize() */
+    public function serialize()
+    {
+        return serialize([
+            $this->user_id,
+            $this->user_name,
+            $this->password,
+        ]);
+    }
+
+    /** @see \Serializable::unserialize() */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->user_id,
+            $this->user_name,
+            $this->password,
+            ) = unserialize($serialized, ['allowed_classes' => false]);
+    }
   
 }
