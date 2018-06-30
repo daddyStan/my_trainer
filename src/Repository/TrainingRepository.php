@@ -13,6 +13,29 @@ class TrainingRepository extends ServiceEntityRepository
         parent::__construct($registry, Training::class);
     }
 
+    public function saveTraining($name, $description)
+    {
+        try {
+            $training = new Training();
+            $training
+                ->setTrainingName($name)
+                ->setDescription($description)
+                ->setCreationDate(\DateTime::createFromFormat(
+                    \DateTimeInterface::W3C,
+                    date(\DateTimeInterface::W3C)
+                ))
+                ->setLastUpdateDate(\DateTime::createFromFormat(
+                    \DateTimeInterface::W3C,
+                    date(\DateTimeInterface::W3C)
+                ));
+            $this->getEntityManager()->persist($training);
+            $this->getEntityManager()->flush();
+
+            return "success";
+        } catch (\Exception $e) {
+            return "ERROR \n $e";
+        }
+    }
 //    /**
 //     * @return User[] Returns an array of User objects
 //     */

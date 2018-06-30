@@ -9,12 +9,14 @@ App\Entity\User:
         user_name:
             type: string
             length: 100
+            unique: true
         password:
             type: string
             length: 254
         email:
             type: string
             length: 254
+            unique: true
         is_active:
             type: boolean
         registration_date:
