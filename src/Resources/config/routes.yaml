@@ -6,3 +6,12 @@ login:
     controller: App\Controller\SecurityController::login
 logout:
     path: /logout
+training:
+    path: /trainings
+    controller: App\Controller\TrainingController::index
+exercise:
+    path: /exercises
+    controller: App\Controller\ExerciseController::index
+set:
+    path: /sets
+    controller: App\Controller\SetController::index

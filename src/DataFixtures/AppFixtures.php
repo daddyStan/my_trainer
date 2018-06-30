@@ -22,12 +22,12 @@ class AppFixtures extends Fixture
         // $manager->persist($product);
 
         $user = new User();
-        $user->setUserName('admin');
+        $user->setUserName('stan');
 
-        $password = $this->encoder->encodePassword($user, 'pass_1234');
+        $password = $this->encoder->encodePassword($user, 'qweqwe');
         $user->setPassword($password);
 
-        $user->setEmail("sts.ko@mail.ru");
+        $user->setEmail("sts.ko@mail.com");
         $user->setIsActive(true);
         $user->setLastVisitDate(new \DateTime("2018-01-02"));
         $user->setRegistrationDate(new \DateTime("2018-01-01"));

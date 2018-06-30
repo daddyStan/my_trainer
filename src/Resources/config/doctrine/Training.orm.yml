@@ -1,5 +1,6 @@
 App\Entity\Training:
     type: entity
+    repositoryClass: App\Repository\TrainingRepository
     table: training
     id:
         training_id:
