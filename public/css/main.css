@@ -1,0 +1,19 @@
+.links a:link {
+    border-radius: 5px 5px 5px 5px;
+    margin: 5px;
+    padding: 5px;
+    background: cornflowerblue;
+    color: floralwhite;
+    text-decoration: none;
+    display: grid;
+}
+.links a:hover {
+    border-radius: 5px 5px 5px 5px;
+    margin: 5px;
+    padding: 5px;
+    background: cornflowerblue;
+    color: floralwhite;
+    text-decoration: none;
+    display: grid;
+}
+a:active {color:#сссссс;initial-letter: normal}
