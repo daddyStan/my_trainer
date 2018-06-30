@@ -9,58 +9,17 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class User
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
     private $user_id;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
     private $user_name;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $user_password;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $user_login_name;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $user_registration_date;
-
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $user_last_visit_date;
-
-    public function getId()
-    {
-        return $this->id;
-    }
+    private $login;
+    private $password;
+    private $salt;
+    private $registration_date;
+    private $last_visit_date;
 
     public function getUserId(): ?int
     {
         return $this->user_id;
-    }
-
-    public function setUserId(int $user_id): self
-    {
-        $this->user_id = $user_id;
-
-        return $this;
     }
 
     public function getUserName(): ?string
@@ -68,58 +27,73 @@ class User
         return $this->user_name;
     }
 
-    public function setUserName(?string $user_name): self
+    public function setUserName(string $user_name): self
     {
         $this->user_name = $user_name;
 
         return $this;
     }
 
-    public function getUserPassword(): ?string
+    public function getLogin(): ?string
     {
-        return $this->user_password;
+        return $this->login;
     }
 
-    public function setUserPassword(string $user_password): self
+    public function setLogin(string $login): self
     {
-        $this->user_password = $user_password;
+        $this->login = $login;
 
         return $this;
     }
 
-    public function getUserLoginName(): ?string
+    public function getPassword(): ?string
     {
-        return $this->user_login_name;
+        return $this->password;
     }
 
-    public function setUserLoginName(string $user_login_name): self
+    public function setPassword(string $password): self
     {
-        $this->user_login_name = $user_login_name;
+        $this->password = $password;
 
         return $this;
     }
 
-    public function getUserRegistrationDate(): ?string
+    public function getSalt(): ?string
     {
-        return $this->user_registration_date;
+        return $this->salt;
     }
 
-    public function setUserRegistrationDate(string $user_registration_date): self
+    public function setSalt(string $salt): self
     {
-        $this->user_registration_date = $user_registration_date;
+        $this->salt = $salt;
 
         return $this;
     }
 
-    public function getUserLastVisitDate(): ?\DateTimeInterface
+    public function getRegistrationDate(): ?\DateTimeInterface
     {
-        return $this->user_last_visit_date;
+        return $this->registration_date;
     }
 
-    public function setUserLastVisitDate(?\DateTimeInterface $user_last_visit_date): self
+    public function setRegistrationDate(\DateTimeInterface $registration_date): self
     {
-        $this->user_last_visit_date = $user_last_visit_date;
+        $this->registration_date = $registration_date;
 
         return $this;
     }
+
+    public function getLastVisitDate(): ?\DateTimeInterface
+    {
+        return $this->last_visit_date;
+    }
+
+    public function setLastVisitDate(\DateTimeInterface $last_visit_date): self
+    {
+        $this->last_visit_date = $last_visit_date;
+
+        return $this;
+    }
+
+
+  
 }

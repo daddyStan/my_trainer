@@ -1,0 +1,24 @@
+App\Entity\User:
+    type: entity
+    table: user
+    id:
+        user_id:
+            type: integer
+            generator: { strategy: IDENTITY }
+    fields:
+        user_name:
+            type: string
+            length: 100
+        login:
+            type: string
+            length: 100
+        password:
+            type: string
+            length: 30
+        salt:
+            type: string
+            length: 30
+        registration_date:
+            type: datetime
+        last_visit_date:
+            type: datetime
