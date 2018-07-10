@@ -66,3 +66,16 @@ a:active {color:#сссссс;initial-letter: normal}
     cursor: pointer;
     border-radius: 7px;
 }
+
+.center-block {
+    cursor: pointer;
+    width: 60%;
+    margin: 5% auto 5% auto;
+    padding: 3%;
+    font-size: 20px;
+    background-color: seagreen;
+    -webkit-border-radius: 10px 10px 10px 10px;
+    -webkit-box-shadow: 3px 3px 2px 1px #bfc4d5;
+    box-shadow: 3px 3px 2px 1px #bfc4d5;
+    border-radius: 10px 10px 10px 10px;
+}

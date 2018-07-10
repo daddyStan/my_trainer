@@ -1,0 +1,10 @@
+services:
+
+    App\Controller\TrainingController:
+        class: App\Controller\TrainingController
+        arguments:
+            - '@doctrine.orm.entity_manager'
+    App\Controller\ExerciseController:
+        class: App\Controller\ExerciseController
+        arguments:
+            - '@doctrine.orm.entity_manager'

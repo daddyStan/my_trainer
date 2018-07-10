@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Repository\TrainingRepository;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -35,6 +36,8 @@ class TrainingController extends Controller
         return $this;
     }
 
+
+
     /**
      * @return EntityManager
      */
@@ -44,20 +47,19 @@ class TrainingController extends Controller
     }
 
     /**
-     * @param EntityManager $em
+     * @param EntityManagerInterface $em
      * @return TrainingController
      */
-    public function setEm(EntityManager $em): TrainingController
+    public function setEm(EntityManagerInterface $em): TrainingController
     {
         $this->em = $em;
         return $this;
     }
 
-    public function __construct(EntityManager $entityManager)
+    public function __construct(EntityManagerInterface $em)
     {
-        $this->setEm($entityManager)
-            ->setTrainingRepository($this->em->getRepository('App:Training'));
-
+        $this->setEm($em)
+             ->setTrainingRepository($this->em->getRepository('App:Training'));
     }
 
     public function index()
@@ -97,12 +99,17 @@ class TrainingController extends Controller
             "trainingsCount"  => count($trainingsSearch),
             "message" => $this->getTrainingRepository()->count([]),
             "result" => $result,
-            "grid"  => $this->renderGrid($trainingsSearch)
+            "grid"  => $trainingsSearch
         ]);
     }
 
-    private function renderGrid($array)
+    public function show($id)
     {
-        return $array;
+
+
+        return $this->render('training/show.html.twig', [
+            'id' => $id,
+            'entity' => $this->getTrainingRepository()->findOneBy(['training_id' => $id]) ?? "Entity not founded"
+        ]);
     }
 }

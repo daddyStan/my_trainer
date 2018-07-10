@@ -12,7 +12,7 @@ App\Entity\Training:
             length: 256
         description:
             type: string
-            length: 100
+            length: 526
         creation_date:
             type: datetime
         last_update_date:
