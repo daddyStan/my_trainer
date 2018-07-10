@@ -89,7 +89,7 @@ class Exercise
     {
         if (!$this->sets->contains($set)) {
             $this->sets[] = $set;
-            $set->setSet($this);
+            $set->setExerciseId($this);
         }
 
         return $this;
@@ -100,8 +100,8 @@ class Exercise
         if ($this->sets->contains($set)) {
             $this->sets->removeElement($set);
             // set the owning side to null (unless already changed)
-            if ($set->getSet() === $this) {
-                $set->setSet(null);
+            if ($set->getExerciseId() === $this) {
+                $set->setExerciseId(null);
             }
         }
 
