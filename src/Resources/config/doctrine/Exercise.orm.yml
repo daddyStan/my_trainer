@@ -26,4 +26,4 @@ App\Entity\Exercise:
     oneToMany:
         sets:
           targetEntity: App\Entity\Set
-          mappedBy: set
+          mappedBy: exercise_id

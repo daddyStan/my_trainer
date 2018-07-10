@@ -88,7 +88,7 @@ class Training
     {
         if (!$this->exercises->contains($exercise)) {
             $this->exercises[] = $exercise;
-            $exercise->setExercise($this);
+            $exercise->setTrainingId($this);
         }
 
         return $this;
@@ -99,8 +99,8 @@ class Training
         if ($this->exercises->contains($exercise)) {
             $this->exercises->removeElement($exercise);
             // set the owning side to null (unless already changed)
-            if ($exercise->getExercise() === $this) {
-                $exercise->setExercise(null);
+            if ($exercise->getTrainingId() === $this) {
+                $exercise->setTrainingId(null);
             }
         }
 

@@ -20,4 +20,4 @@ App\Entity\Training:
     oneToMany:
         exercises:
           targetEntity: App\Entity\Exercise
-          mappedBy: exercise
+          mappedBy: training_id
