@@ -14,7 +14,8 @@
 
     <div class="links">
     {% for row in grid %}
-        <a href="#">{{ row.getTrainingName }}</a>
+        {#<a href="{{ path('training') }}/{{ row.getTrainingId }}">{{ row.getTrainingName }}</a>#}
+        <a href="{{ path('training', {'id': row.getTrainingId}) }}">{{ row.getTrainingName }}</a>
     {% else %}
         No trainings have been found.
     {% endfor %}
