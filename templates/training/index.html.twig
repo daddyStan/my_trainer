@@ -10,19 +10,18 @@
 <div class="example-wrapper">
     <h1>{% trans %}Trainings{% endtrans %}</h1>
 
-    Founded: {{ trainingsCount }}<br/>
+    {% trans %}Founded{% endtrans %}: {{ trainingsCount }}<br/>
 
     <div class="links">
     {% for row in grid %}
-        {#<a href="{{ path('training') }}/{{ row.getTrainingId }}">{{ row.getTrainingName }}</a>#}
         <a href="{{ path('training', {'id': row.getTrainingId}) }}">{{ row.getTrainingName }}</a>
     {% else %}
-        No trainings have been found.
+        {% trans %}No trainings have been found{% endtrans %}.
     {% endfor %}
     </div>
     {{ form_start(form) }}
+    <h6>{% trans %}Create new training{% endtrans %}</h6>
     {{ form_widget(form) }}
-
     <input type="submit" />
     {{ form_end(form) }}
 

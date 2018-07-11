@@ -1,5 +1,6 @@
 App\Entity\Set:
     type: entity
+    repositoryClass: App\Repository\SetRepository
     table: set
     id:
         set_id:

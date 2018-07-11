@@ -16,6 +16,27 @@
     {% else %}
         {% trans %}Not founded{% endtrans %}
     {% endif %}
+    <br/>
+    <h1>{% trans %}Exercises{% endtrans %}:</h1>
+
+    <div class="links">
+        {% for row in exercises %}
+            <a href="{{ path('exercise',{'id':row.getExerciseId}) }}">{{ row.getExerciseName }}</a>
+        {% else %}
+            {% trans %}No exercises have been found{% endtrans %}.
+        {% endfor %}
+    </div>
+
+    <br/>
+
+    {{ form_start(form) }}
+    <h3>{% trans %}Create new exercise{% endtrans %}</h3>
+    {{ form_widget(form) }}
+        {% if result is defined %}
+            {% trans %}Exercise succesfully saved{% endtrans %}
+        {%  endif %}
+    <input type="submit" />
+    {{ form_end(form) }}
 
     <br/>
     <a href="{{ path('trainings') }}">Back</a>

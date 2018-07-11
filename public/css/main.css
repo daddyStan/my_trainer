@@ -79,3 +79,10 @@ a:active {color:#сссссс;initial-letter: normal}
     box-shadow: 3px 3px 2px 1px #bfc4d5;
     border-radius: 10px 10px 10px 10px;
 }
+
+form {
+    border-style: solid;
+    padding: 10px;
+    margin: 40px auto 5px auto;
+    width: 80%;
+}
