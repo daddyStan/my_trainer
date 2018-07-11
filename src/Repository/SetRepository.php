@@ -13,6 +13,32 @@ class SetRepository extends ServiceEntityRepository
         parent::__construct($registry, Set::class);
     }
 
+    public function saveSet($comment, $tries, $weight, $exerciseId)
+    {
+        try {
+            $set = new Set();
+            $set
+                ->setComment($comment)
+                ->setTries($tries)
+                ->setWeight($weight)
+                ->setExerciseId($exerciseId)
+                ->setCreationDate(\DateTime::createFromFormat(
+                    \DateTimeInterface::W3C,
+                    date(\DateTimeInterface::W3C)
+                ))
+                ->setLastUpdateDate(\DateTime::createFromFormat(
+                    \DateTimeInterface::W3C,
+                    date(\DateTimeInterface::W3C)
+                ));
+            $this->getEntityManager()->persist($set);
+            $this->getEntityManager()->flush();
+
+            return "Set succesfully saved";
+        } catch (\Exception $e) {
+            return "ERROR \n $e";
+        }
+    }
+
 //    /**
 //     * @return User[] Returns an array of User objects
 //     */

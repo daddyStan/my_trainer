@@ -15,8 +15,10 @@ training:
     requirements:
         id: '\d+'
 exercise:
-    path: /exercises/
+    path: /exercise/{id}
     controller: App\Controller\ExerciseController::index
+    requirements:
+        id: '\d+'
 set:
     path: /sets
     controller: App\Controller\SetController::index

@@ -31,7 +31,7 @@ class TrainingRepository extends ServiceEntityRepository
             $this->getEntityManager()->persist($training);
             $this->getEntityManager()->flush();
 
-            return "success";
+            return "Training succesfully saved";
         } catch (\Exception $e) {
             return "ERROR \n $e";
         }

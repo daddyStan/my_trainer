@@ -1,5 +1,6 @@
 App\Entity\Exercise:
     type: entity
+    repositoryClass: App\Repository\ExerciseRepository
     table: exercise
     id:
         exercise_id:
@@ -11,7 +12,7 @@ App\Entity\Exercise:
             length: 256
         description:
             type: string
-            length: 100
+            length: 2056
         creation_date:
             type: datetime
         last_update_date:

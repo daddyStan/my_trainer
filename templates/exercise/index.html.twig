@@ -4,8 +4,36 @@
 
 {% block body %}
     <div class="center-block">
-        {% if id is defined  %}
-            {% trans %}Exercise{% endtrans %} #{{ id }}
+        {% if exercise is defined  %}
+            <h3>{% trans %}Exercise{% endtrans %}</h3>
+            {% trans %}Exercise name{% endtrans %}: {{ exercise.getExerciseName }}
+            <br/>
+            {% trans %}Description{% endtrans %}:
+                {{ exercise.getDescription }}
+
         {% endif %}
     </div>
+
+
+
+    {{ form_start(form) }}
+    <h3>{% trans %}Add new set{% endtrans %}</h3>
+    {{ form_widget(form) }}
+    {% if result is defined %}
+        {% trans %}Exercise succesfully saved{% endtrans %}
+    {%  endif %}
+
+    <div class="">
+        {% trans %}Tries{% endtrans %}:
+        <div id="range_tries">0</div>
+        {% trans %}Weight{% endtrans %}:
+        <div id="range_weight">0</div>
+    </div>
+    <input type="submit" value="{% trans %}Submit{% endtrans %}" />
+    {% if result is defined %}
+        {% trans %}Set succesfully saved{% endtrans %}
+    {%  endif %}
+    {{ form_end(form) }}
+
+
 {% endblock %}
