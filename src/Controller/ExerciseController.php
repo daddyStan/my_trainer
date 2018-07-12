@@ -99,20 +99,18 @@ class ExerciseController extends Controller
                 'method' => 'POST'
             ]
         )
-            ->add("tries", RangeType::class, [
+            ->add("tries", TextType::class, [
                 'attr' => [
-                    'min' => 0,
-                    'max' => 100,
                     'value' => 0,
-                    'onchange' => 'document.getElementById("range_tries").innerHTML = this.value;'
+                    'inputmode' => 'numeric',
+                    'pattern'   => '[0-9]*'
                 ]
             ])
-            ->add("weight", RangeType::class, [
+            ->add("weight", TextType::class, [
                 'attr' => [
-                    'min' => 0,
-                    'max' => 100,
                     'value' => 0,
-                    'onchange' => 'document.getElementById("range_weight").innerHTML = this.value;'
+                    'inputmode' => 'numeric',
+                    'pattern'   => '[0-9]*'
                 ]
             ])
             ->add("comment", TextareaType::class)
