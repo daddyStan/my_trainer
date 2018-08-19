@@ -25,3 +25,15 @@ App\Entity\Set:
           joinColumn:
             name: exercise_id
             referencedColumnName: exercise_id
+        user_id:
+          targetEntity: App\Entity\User
+          joinColumn:
+            name: user_id
+            referencedColumnName: user_id
+            nullable: false
+        day_id:
+          targetEntity: App\Entity\Day
+          joinColumn:
+            name: day_id
+            referencedColumnName: day_id
+            nullable: false

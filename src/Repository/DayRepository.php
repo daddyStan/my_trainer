@@ -3,27 +3,43 @@
 namespace App\Repository;
 
 use App\Entity\Day;
-use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
-use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 
-/**
- * @method User|null find($id, $lockMode = null, $lockVersion = null)
- * @method User|null findOneBy(array $criteria, array $orderBy = null)
- * @method User[]    findAll()
- * @method User[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
- */
-class UserRepository extends ServiceEntityRepository implements UserLoaderInterface
+class DayRepository extends ServiceEntityRepository
 {
     public function __construct(RegistryInterface $registry)
     {
-        parent::__construct($registry, User::class);
+        parent::__construct($registry, Day::class);
     }
 
-    public function loadUserByUsername($username)
+    public function saveDay($exercise_name, $description, $training_id, $user)
     {
-        return self::loadUserByUsername($username);
+
+    }
+
+    public function updateAndCloseDay(Day $day, $user)
+    {
+        $day->setFinishDate(
+            \DateTime::createFromFormat(
+                \DateTimeInterface::W3C,
+                date(\DateTimeInterface::W3C)
+            )
+        );
+
+        $diff = $day->getCreationDate()->diff($day->getFinishDate(),true);
+        $str = "Hours: " . $diff->h . ", minutes: " . $diff->i;
+        $day->setMainTime($str);
+
+        $user->setDayId(null);
+
+        $this->getEntityManager()->persist($day);
+        $this->getEntityManager()->flush();
+
+        $this->getEntityManager()->persist($user);
+        $this->getEntityManager()->flush();
+
+        return $str;
     }
 
 //    /**

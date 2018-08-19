@@ -26,3 +26,4 @@ yarn-error.log
 /Docker/postgres
 Docker/tarantool
 composer.lock
+/src/Migrations/

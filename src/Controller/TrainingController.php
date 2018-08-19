@@ -113,11 +113,14 @@ class TrainingController extends Controller
                 ->getTrainingRepository()
                 ->saveTraining(
                     $data['training_name'],
-                    $data['description']
+                    $data['description'],
+                    $this->getUser()
                 );
         }
 
-        $trainingsSearch = $this->getTrainingRepository()->findAll();
+        $trainingsSearch = $this->getTrainingRepository()->findby(
+            ['user_id' => $this->getUser()]
+        );
 
         return $this->render('training/index.html.twig', [
             'controller_name' => 'TrainingController',
@@ -157,12 +160,16 @@ class TrainingController extends Controller
                 ->saveExercise(
                     $data['exercise_name'],
                     $data['description'],
-                    $trainingEntity
+                    $trainingEntity,
+                    $this->getUser()
                 );
         }
 
         $exercises = $this->getExerciseRepository()->findBy(
-            ['training_id' => $id]
+            [
+                'training_id' => $id,
+                'user_id' => $this->getUser()
+            ]
         );
 
         return $this->render('training/show.html.twig', [

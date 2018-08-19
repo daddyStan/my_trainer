@@ -38,6 +38,17 @@
     <input type="submit" />
     {{ form_end(form) }}
 
+
+    {% if message is defined %}
+        {{ message }}
+    {% endif %}
+
+    {% if result is defined %}
+        {{ result }}
+    {% endif %}
+
+
+    
     <br/>
     <a href="{{ path('trainings') }}">Back</a>
 {% endblock %}

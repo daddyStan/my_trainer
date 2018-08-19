@@ -88,57 +88,57 @@ class ExerciseController extends Controller
 
     public function index($id)
     {
-        $exerciseEntity = $this->getExerciseRepository()->findOneBy(['exercise_id' => $id]);
-        $result = null;
-        $formFactory = Forms::createFormFactoryBuilder()
-            ->getFormFactory();
-
-        $form = $formFactory->createBuilder(
-            FormType::class,null, [
-                'action' => "/exercise/$id",
-                'method' => 'POST'
-            ]
-        )
-            ->add("tries", TextType::class, [
-                'attr' => [
-                    'value' => 0,
-                    'inputmode' => 'numeric',
-                    'pattern'   => '[0-9]*'
-                ]
-            ])
-            ->add("weight", TextType::class, [
-                'attr' => [
-                    'value' => 0,
-                    'inputmode' => 'numeric',
-                    'pattern'   => '[0-9]*'
-                ]
-            ])
-            ->add("comment", TextareaType::class)
-            ->getForm();
-
-        $view = $form->createView();
-        $form->handleRequest();
-
-        if ($form->isSubmitted()) {
-            $data = $form->getData();
-            if ( $form->getErrors() ) {
-            $result = $this
-                ->getSetRepository()
-                ->saveSet(
-                    $data['comment'],
-                    $data['tries'],
-                    $data['weight'],
-                    $exerciseEntity
-                );
-            }
-        }
+//        $exerciseEntity = $this->getExerciseRepository()->findOneBy(['exercise_id' => $id]);
+//        $result = null;
+//        $formFactory = Forms::createFormFactoryBuilder()
+//            ->getFormFactory();
+//
+//        $form = $formFactory->createBuilder(
+//            FormType::class,null, [
+//                'action' => "/exercise/$id",
+//                'method' => 'POST'
+//            ]
+//        )
+//            ->add("tries", TextType::class, [
+//                'attr' => [
+//                    'value' => 0,
+//                    'inputmode' => 'numeric',
+//                    'pattern'   => '[0-9]*'
+//                ]
+//            ])
+//            ->add("weight", TextType::class, [
+//                'attr' => [
+//                    'value' => 0,
+//                    'inputmode' => 'numeric',
+//                    'pattern'   => '[0-9]*'
+//                ]
+//            ])
+//            ->add("comment", TextareaType::class)
+//            ->getForm();
+//
+//        $view = $form->createView();
+//        $form->handleRequest();
+//
+//        if ($form->isSubmitted()) {
+//            $data = $form->getData();
+//            if ( $form->getErrors() ) {
+//            $result = $this
+//                ->getSetRepository()
+//                ->saveSet(
+//                    $data['comment'],
+//                    $data['tries'],
+//                    $data['weight'],
+//                    $exerciseEntity
+//                );
+//            }
+//        }
 
 
         return $this->render('exercise/index.html.twig', [
             'id'              => $id,
             'exercise'        => $this->getExerciseRepository()->findOneBy(['exercise_id' => $id]),
-            'form'            => $view,
-            'result'          => $result
+//            'form'            => $view,
+//            'result'          => $result
         ]);
     }
 }

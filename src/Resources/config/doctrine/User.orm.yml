@@ -23,3 +23,9 @@ App\Entity\User:
             type: datetime
         last_visit_date:
             type: datetime
+    manyToOne:
+        day_id:
+            targetEntity: App\Entity\Day
+            joinColumn:
+                name: day_id
+                referencedColumnName: day_id

@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello {{ controller_name }}!{% endblock %}
+
+{% block body %}
+    <style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    </style>
+
+    <div class="example-wrapper">
+    {% trans %}Choose the training to begin an exercise{% endtrans %}
+        <div class="links">
+            {% for row in grid %}
+                <a href="{{ path('day_started', {'training_id': row.getTrainingId}) }}">{{ row.getTrainingName }}</a>
+            {% else %}
+                {% trans %}No trainings have been found{% endtrans %}.
+            {% endfor %}
+        </div>
+        <a href="/">Назад</a>
+    </div>
+{% endblock %}
