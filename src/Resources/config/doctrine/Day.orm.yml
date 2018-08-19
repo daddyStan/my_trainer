@@ -1,0 +1,44 @@
+App\Entity\Day:
+    type: entity
+    repositoryClass: App\Repository\DayRepository
+    table: day
+    id:
+        day_id:
+            type: integer
+            generator: { strategy: IDENTITY }
+    fields:
+        creation_date:
+            type: datetime
+            nullable: false
+        finish_date:
+            type: datetime
+            nullable: true
+        main_time:
+            type: string
+            length: 40
+            nullable: true
+    manyToOne:
+        training_id:
+          targetEntity: App\Entity\Training
+          joinColumn:
+            name: training_id
+            referencedColumnName: training_id
+            nullable: false
+        exercise_id:
+          targetEntity: App\Entity\Exercise
+          joinColumn:
+            name: exercise_id
+            referencedColumnName: exercise_id
+            nullable: true
+        set_id:
+          targetEntity: App\Entity\Set
+          joinColumn:
+            name: set_id
+            referencedColumnName: set_id
+            nullable: true
+        user_id:
+          targetEntity: App\Entity\User
+          joinColumn:
+            name: user_id
+            referencedColumnName: user_id
+            nullable: false

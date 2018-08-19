@@ -13,7 +13,7 @@ class TrainingRepository extends ServiceEntityRepository
         parent::__construct($registry, Training::class);
     }
 
-    public function saveTraining($name, $description)
+    public function saveTraining($name, $description, $user)
     {
         try {
             $training = new Training();
@@ -27,7 +27,8 @@ class TrainingRepository extends ServiceEntityRepository
                 ->setLastUpdateDate(\DateTime::createFromFormat(
                     \DateTimeInterface::W3C,
                     date(\DateTimeInterface::W3C)
-                ));
+                ))
+                ->setUserId($user);
             $this->getEntityManager()->persist($training);
             $this->getEntityManager()->flush();
 

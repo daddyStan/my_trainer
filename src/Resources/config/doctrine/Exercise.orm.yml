@@ -24,6 +24,12 @@ App\Entity\Exercise:
           joinColumn:
             name: training_id
             referencedColumnName: training_id
+        user_id:
+          targetEntity: App\Entity\User
+          joinColumn:
+            name: user_id
+            referencedColumnName: user_id
+            nullable: false
     oneToMany:
         sets:
           targetEntity: App\Entity\Set

@@ -21,3 +21,10 @@ App\Entity\Training:
         exercises:
           targetEntity: App\Entity\Exercise
           mappedBy: training_id
+    manyToOne:
+        user_id:
+          targetEntity: App\Entity\User
+          joinColumn:
+            name: user_id
+            referencedColumnName: user_id
+            nullable: false

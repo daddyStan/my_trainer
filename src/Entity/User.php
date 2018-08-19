@@ -19,6 +19,7 @@ class User implements UserInterface, \Serializable
     private $salt;
     private $registration_date;
     private $last_visit_date;
+    private $day_id;
 
     public function __construct()
     {
@@ -152,6 +153,18 @@ class User implements UserInterface, \Serializable
             $this->user_name,
             $this->password,
             ) = unserialize($serialized, ['allowed_classes' => false]);
+    }
+
+    public function getDayId(): ?Day
+    {
+        return $this->day_id;
+    }
+
+    public function setDayId(?Day $day_id): self
+    {
+        $this->day_id = $day_id;
+
+        return $this;
     }
   
 }

@@ -22,3 +22,23 @@ exercise:
 set:
     path: /sets
     controller: App\Controller\SetController::index
+day:
+    path: /day
+    controller: App\Controller\DayController:index
+day_started:
+    path: /day_started/{training_id}/
+    controller: App\Controller\DayController:started
+    requirements:
+        training_id: '\d+'
+day_exercise:
+    path: /day_exercise/{day_id}/{training_id}/{exrcise_id}/
+    controller: App\Controller\DayController:exercise
+    requirements:
+        training_id: '\d+'
+        exercise_id: '\d+'
+        day_id: '\d+'
+training_finish:
+    path: /training_finish/{day_id}/
+    controller: App\Controller\DayController:trainingFinish
+    requirements:
+        day_id: '\d+'

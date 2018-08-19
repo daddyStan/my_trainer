@@ -13,6 +13,8 @@ class Set
     private $creation_date;
     private $last_update_date;
     private $exercise_id;
+    private $user_id;
+    private $day_id;
 
     public function getSetId(): ?int
     {
@@ -87,6 +89,30 @@ class Set
     public function setExerciseId(?Exercise $exercise_id): self
     {
         $this->exercise_id = $exercise_id;
+
+        return $this;
+    }
+
+    public function getUserId(): ?User
+    {
+        return $this->user_id;
+    }
+
+    public function setUserId(?User $user_id): self
+    {
+        $this->user_id = $user_id;
+
+        return $this;
+    }
+
+    public function getDayId(): ?Day
+    {
+        return $this->day_id;
+    }
+
+    public function setDayId(?Day $day_id): self
+    {
+        $this->day_id = $day_id;
 
         return $this;
     }

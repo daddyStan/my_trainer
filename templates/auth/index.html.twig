@@ -3,9 +3,20 @@
 {% block title %}{% trans %}Menu{% endtrans %}{% endblock %}
 
 {% block body %}
-
-    <div>
-        <ul><a href="{{ path('trainings') }}">{% trans %}Trainings{% endtrans %}</a></ul>
+    <div class="container">
+        <div class="row">
+            <div class="col"></div>
+            <div class="margin col" style="text-align: center">
+                <a class="btn btn-primary btn-lg btn-block" href="{{ path('trainings') }}" role="button">{% trans %}Trainings{% endtrans %}</a>
+            </div>
+            <div class="col"></div>
+        </div>
+        <div class="row">
+            <div class="col"></div>
+            <div class="margin col" style="text-align: center">
+        <a class="btn btn-primary btn-lg btn-block " href="{{ path('day') }}" role="button">{% trans %}training_days{% endtrans %}</a>
+            </div>
+            <div class="col"></div>
+        </div>
     </div>
-
 {% endblock %}

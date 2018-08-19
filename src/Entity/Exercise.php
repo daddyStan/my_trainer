@@ -17,6 +17,7 @@ class Exercise
     private $creation_date;
     private $last_update_date;
     private $training_id;
+    private $user_id;
     private $sets;
 
     public function __construct()
@@ -116,6 +117,18 @@ class Exercise
     public function setTrainingId(?Training $training_id): self
     {
         $this->training_id = $training_id;
+
+        return $this;
+    }
+
+    public function getUserId(): ?User
+    {
+        return $this->user_id;
+    }
+
+    public function setUserId(?User $user_id): self
+    {
+        $this->user_id = $user_id;
 
         return $this;
     }

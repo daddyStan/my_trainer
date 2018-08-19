@@ -13,15 +13,17 @@ class SetRepository extends ServiceEntityRepository
         parent::__construct($registry, Set::class);
     }
 
-    public function saveSet($comment, $tries, $weight, $exerciseId)
+    public function saveSet($comment, $tries, $weight, $exerciseId, $user, $day)
     {
         try {
             $set = new Set();
             $set
-                ->setComment($comment)
+                ->setComment($comment ?? "")
                 ->setTries($tries)
                 ->setWeight($weight)
                 ->setExerciseId($exerciseId)
+                ->setUserId($user)
+                ->setDayId($day)
                 ->setCreationDate(\DateTime::createFromFormat(
                     \DateTimeInterface::W3C,
                     date(\DateTimeInterface::W3C)

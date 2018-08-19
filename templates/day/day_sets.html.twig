@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello {{ controller_name }}!{% endblock %}
+
+{% block body %}
+    <style xmlns="http://www.w3.org/1999/html">
+        .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    </style>
+
+    <div class="example-wrapper">
+        <div class="links">
+            {% for row in grid %}
+            - {% trans %}Count of tries{% endtrans %}: {{ row.getTries }} | {% trans %}Weight{% endtrans %}: {{ row.getWeight }}  {% trans %}kg{% endtrans %} | {% trans %}Comment{% endtrans %}: {{ row.getComment }} </br>
+            {% else %}
+                {% trans %}No sets have been found{% endtrans %}.
+            {% endfor %}
+        </div>
+
+        {{ form_start(form) }}
+        <h3>{% trans %}Add new set{% endtrans %}</h3>
+        {{ form_widget(form) }}
+        {% if result is defined %}
+        {% trans %}Exercise succesfully saved{% endtrans %}
+        {%  endif %}
+
+        <input type="submit" value="{% trans %}Submit{% endtrans %}" />
+        {% if result is defined %}
+        {% trans %}Set succesfully saved{% endtrans %}
+        {%  endif %}
+        {{ form_end(form) }}
+
+        <a href="{{ path('day') }}" >{% trans %}Back{% endtrans %}</a>
+
+    </div>
+{% endblock %}

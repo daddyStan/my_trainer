@@ -3,35 +3,33 @@
 {% block title %}Hello {{ controller_name }}!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-</style>
+<div class="">
+    <div class="container-fluid" style="background-color: #718C00">
+        <h1>{% trans %}Trainings{% endtrans %}</h1>
 
-<div class="example-wrapper">
-    <h1>{% trans %}Trainings{% endtrans %}</h1>
+        {% if trainingsCount is defined %}{% trans %}Founded{% endtrans %}: {{ trainingsCount }}{% endif %}<br/>
 
-    {% trans %}Founded{% endtrans %}: {{ trainingsCount }}<br/>
+        <div>
+        {% for row in grid %}
+            <ul class=""><a href="{{ path('training', {'id': row.getTrainingId}) }}">{{ row.getTrainingName }}</a></ul>
+        {% else %}
+            {% trans %}No trainings have been found{% endtrans %}.
+        {% endfor %}
+        </div>
+        {{ form_start(form) }}
+        <h6>{% trans %}Create new training{% endtrans %}</h6>
+        {{ form_widget(form) }}
+        <input type="submit" />
+        {{ form_end(form) }}
 
-    <div class="links">
-    {% for row in grid %}
-        <a href="{{ path('training', {'id': row.getTrainingId}) }}">{{ row.getTrainingName }}</a>
-    {% else %}
-        {% trans %}No trainings have been found{% endtrans %}.
-    {% endfor %}
+        {% if message is defined %}
+            {{ message }}
+        {% endif %}
+
+        {% if result is defined %}
+            {{ result }}
+        {% endif %}
+        <a href="/">Назад</a>
     </div>
-    {{ form_start(form) }}
-    <h6>{% trans %}Create new training{% endtrans %}</h6>
-    {{ form_widget(form) }}
-    <input type="submit" />
-    {{ form_end(form) }}
-
-    {% if message is defined %}
-        {{ message }}
-    {% endif %}
-
-    {% if result is defined %}
-        {{ result }}
-    {% endif %}
-
 </div>
 {% endblock %}
