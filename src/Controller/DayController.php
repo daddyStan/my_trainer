@@ -263,18 +263,21 @@ class DayController extends Controller
                 'attr' => [
                     'value' => 0,
                     'inputmode' => 'numeric',
-                    'pattern'   => '[0-9]*'
+                    'pattern'   => '[0-9]*',
+                    'class' => 'form-control'
                 ]
             ])
             ->add("weight", TextType::class, [
                 'attr' => [
                     'value' => 0,
                     'inputmode' => 'numeric',
-                    'pattern'   => '[0-9]*'
+                    'pattern'   => '[0-9]*',
+                    'class' => 'form-control'
                 ]
             ])
             ->add("comment", TextareaType::class, [
-                'required' =>false
+                'required' =>false,
+                'attr' => ['class' => 'form-control']
             ])
             ->getForm();
 

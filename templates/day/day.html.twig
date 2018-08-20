@@ -1,22 +1,41 @@
 {% extends 'base.html.twig' %}
-
-{% block title %}Hello {{ controller_name }}!{% endblock %}
-
+{% block title %}{% trans %}Training day{% endtrans %}{% endblock %}
 {% block body %}
-    <style>
-        .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    </style>
-
-    <div class="example-wrapper">
-        {% trans %}Choose the exercise to begin a set{% endtrans %}
-        <div class="links">
-            {% for row in grid %}
-                <a href="{{ path('day_exercise', {'day_id': day.dayId, 'training_id':day.getTrainingId.getTrainingId, 'exrcise_id':row.getExerciseId}) }}">{{ row.getExerciseName }}</a>
-            {% else %}
-                {% trans %}No exercises have been found{% endtrans %}.
-            {% endfor %}
+    <div class="container">
+        <div class="row">
+            <div class="card">
+                <div class="card-header">
+                    <h4>{% trans %}Choose the exercise to begin a set{% endtrans %}</h4>
+                </div>
+                <div class="card-body">
+                    {% for row in grid %}
+                        <div class="row">
+                            <div class="margin col">
+                                <a href="{{ path('day_exercise', {'day_id': day.dayId, 'training_id':day.getTrainingId.getTrainingId, 'exrcise_id':row.getExerciseId}) }}"
+                                   class="btn btn-lg btn-success btn-block"
+                                   role="button">{{ row.getExerciseName }}</a>
+                            </div>
+                        </div>
+                    {% else %}
+                        {% trans %}No exercise have been found{% endtrans %}.
+                    {% endfor %}
+                </div>
+            </div>
         </div>
-        <a href="{{ path('training_finish', {'day_id': day.dayId}) }}">{% trans %}Close training day{% endtrans %}</a><br>
-        <a href="/">{% trans %}Back{% endtrans %}</a>
+    </div>
+
+    <div class="container">
+        <div class="container">
+            <div class="row">
+                <a href="/" class="margin btn btn-secondary btn-block">{% trans %}Back{% endtrans %}</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col"></div>
+            <div class="col"><a class="btn btn-danger margin " href="{{ path('training_finish', {'day_id': day.dayId}) }}">{% trans %}Close training day{% endtrans %}</a></div>
+        </div>
     </div>
 {% endblock %}

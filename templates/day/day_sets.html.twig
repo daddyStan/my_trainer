@@ -1,35 +1,67 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello {{ controller_name }}!{% endblock %}
+{% block title %}{% trans %}Sets{% endtrans %}{% endblock %}
 
 {% block body %}
-    <style xmlns="http://www.w3.org/1999/html">
-        .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    </style>
-
-    <div class="example-wrapper">
-        <div class="links">
-            {% for row in grid %}
-            - {% trans %}Count of tries{% endtrans %}: {{ row.getTries }} | {% trans %}Weight{% endtrans %}: {{ row.getWeight }}  {% trans %}kg{% endtrans %} | {% trans %}Comment{% endtrans %}: {{ row.getComment }} </br>
-            {% else %}
-                {% trans %}No sets have been found{% endtrans %}.
-            {% endfor %}
+    <div class="container">
+        {% if grid is not empty %}
+            <div class="row">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-header">
+                            {% trans %}Sets{% endtrans %}
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-striped table-dark">
+                                <thead>
+                                <tr>
+                                    <th scope="col">{% trans %}Count of tries{% endtrans %}</th>
+                                    <th scope="col">{% trans %}Weight{% endtrans %}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for row in grid %}
+                                <tr>
+                                    <td>{{ row.getTries }}</td>
+                                    <td>{{ row.getWeight }}  {% trans %}kg{% endtrans %}</td>
+                                </tr>
+                                {% else %}
+                                    {% trans %}No sets have been found{% endtrans %}.
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+            </div>
+        {% endif %}
         </div>
 
-        {{ form_start(form) }}
-        <h3>{% trans %}Add new set{% endtrans %}</h3>
-        {{ form_widget(form) }}
-        {% if result is defined %}
-        {% trans %}Exercise succesfully saved{% endtrans %}
-        {%  endif %}
-
-        <input type="submit" value="{% trans %}Submit{% endtrans %}" />
-        {% if result is defined %}
-        {% trans %}Set succesfully saved{% endtrans %}
-        {%  endif %}
-        {{ form_end(form) }}
-
-        <a href="{{ path('day') }}" >{% trans %}Back{% endtrans %}</a>
-
+        <div class="row card">
+            <div class="card-header">
+                <h3>{% trans %}Add new set{% endtrans %}</h3>
+            </div>
+            {{ form_start(form) }}
+            <div class="col">
+                <div class="margin">
+                    {{ form_label(form.tries) }}
+                    {{ form_widget(form.tries) }}
+                </div>
+                <div class="margin">
+                    {{ form_label(form.weight) }}
+                    {{ form_widget(form.weight) }}
+                </div>
+                <div class="margin">
+                    {{ form_label(form.comment) }}
+                    {{ form_widget(form.comment) }}
+                </div>
+                <input class="margin btn btn-primary" type="submit" />
+                {{ form_end(form) }}
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <a href="{{ path('day') }}" class="margin btn btn-secondary btn-block">{% trans %}Back{% endtrans %}</a>
+            </div>
+        </div>
     </div>
 {% endblock %}

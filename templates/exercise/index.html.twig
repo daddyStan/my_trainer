@@ -3,16 +3,25 @@
 {% block title %}{% trans %}Exercises{% endtrans %}{% endblock %}
 
 {% block body %}
-    <div class="center-block">
+    <div class="container">
         {% if exercise is defined  %}
-            <h3>{% trans %}Exercise{% endtrans %}</h3>
-            {% trans %}Exercise name{% endtrans %}: {{ exercise.getExerciseName }}
-            <br/>
-            {% trans %}Description{% endtrans %}:
-                {{ exercise.getDescription }}
-
+            <div class="row">
+                <div class="col"></div>
+                <div class="col"><h2 style="text-align: center">{% trans %}Training{% endtrans %}</h2></div><div class="col"></div>
+            </div>
+            <div class="card ">
+                <div class="card-header">
+                    {{ exercise.getExerciseName }}
+                </div>
+                <div class="card-body text-white bg-dark mb-3">
+                    {{ exercise.getDescription }}
+                </div>
+            </div>
         {% endif %}
+        <div class="container">
+            <div class="row">
+                <a href="#" class="margin btn btn-secondary btn-block" onclick="history.back();return false;">{% trans %}Back{% endtrans %}</a>
+            </div>
+        </div>
     </div>
-
-    <a href="#" onclick="history.back();return false;">Назад</a>
 {% endblock %}
