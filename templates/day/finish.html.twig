@@ -1,18 +1,25 @@
 {% extends 'base.html.twig' %}
-
-{% block title %}Hello {{ controller_name }}!{% endblock %}
-
+{% block title %}{% trans %}Training is finished{% endtrans %}!{% endblock %}
 {% block body %}
-    <style>
-        .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    </style>
+    <div class="container">
 
-    <div class="example-wrapper">
-        {% trans %}Training id finished!{% endtrans %}
-        {% if message is defined %}
-            {{ message }}
-        {%  endif %}
 
-        <a href="{{ path('day') }}">{% trans %}Back{% endtrans %}</a>
+
+        <div class="card margin">
+            <div class="card-header">
+                <h2>{% trans %}Training is finished{% endtrans %}!</h2>
+            </div>
+            <div class="card-body">
+                {% if message is defined %}
+                    {{ message }}
+                {%  endif %}
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <a href="{{ path('day') }}" class="margin btn btn-secondary btn-block">{% trans %}Back{% endtrans %}</a>
+            </div>
+        </div>
     </div>
 {% endblock %}

@@ -100,8 +100,12 @@ class TrainingController extends Controller
                 'method' => 'POST',
             ]
         )
-            ->add("training_name", TextType::class)
-            ->add("description", TextareaType::class)
+            ->add("training_name", TextType::class, [
+                'attr' => ['class' => 'form-control'],
+            ])
+            ->add("description", TextareaType::class, [
+                'attr' => ['class' => 'form-control'],
+            ])
             ->getForm();
 
         $view = $form->createView();
@@ -146,8 +150,12 @@ class TrainingController extends Controller
                 'method' => 'POST'
             ]
         )
-            ->add("exercise_name", TextType::class)
-            ->add("description", TextareaType::class)
+            ->add("exercise_name", TextType::class,[
+                'attr' => ['class' => 'form-control'],
+            ])
+            ->add("description", TextareaType::class,[
+                'attr' => ['class' => 'form-control'],
+            ])
             ->getForm();
 
         $view = $form->createView();
@@ -173,7 +181,6 @@ class TrainingController extends Controller
         );
 
         return $this->render('training/show.html.twig', [
-            'id' => $id,
             'result' => $result,
             'form' => $view,
             'exercises' => $exercises,

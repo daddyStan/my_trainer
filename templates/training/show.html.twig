@@ -3,52 +3,67 @@
 {% block title %}{% trans %}Training{% endtrans %}{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-</style>
-
-<div class="example-wrapper">
-    <h1>{% trans %}Training{% endtrans %}</h1>
-    <h3>ID - {% if id is defined %}{{ id }}{% endif %}</h3>
-    {% trans %}Description{% endtrans %}:
-    {% if entity.getDescription is defined %}
-        {{ entity.getDescription }}
-    {% else %}
-        {% trans %}Not founded{% endtrans %}
-    {% endif %}
-    <br/>
-    <h1>{% trans %}Exercises{% endtrans %}:</h1>
-
-    <div class="links">
-        {% for row in exercises %}
-            <a href="{{ path('exercise',{'id':row.getExerciseId}) }}">{{ row.getExerciseName }}</a>
+<div class="container">
+    <div class="row">
+        <div class="col"></div>
+        <div class="col"><h1 style="text-align: center">{% trans %}Training{% endtrans %}</h1></div><div class="col"></div>
+    </div>
+    <div class="row">
+        <div class="d-block p-2 bg-dark text-white btn-block">
+        {% trans %}Description{% endtrans %}:
+        {% if entity.getDescription is defined %}
+            {{ entity.getDescription }}
         {% else %}
-            {% trans %}No exercises have been found{% endtrans %}.
-        {% endfor %}
+            {% trans %}Not founded{% endtrans %}
+        {% endif %}
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="col"></div>
+        <div class="col"><h1 style="text-align: center">{% trans %}Exercises{% endtrans %}</h1></div><div class="col"></div>
+    </div>
+
+    <div class="row">
+        <div class="container card margin">
+            {% for row in exercises %}
+                <div class="row">
+                    <div class="margin col">
+                        <a href="{{ path('exercise',{'id':row.getExerciseId}) }}"
+                           class="btn btn-warning btn-lg btn-info btn-block"
+                           role="button">{{ row.getExerciseName }}</a>
+                    </div>
+                </div>
+            {% else %}
+                {% trans %}No exercises have been found{% endtrans %}.
+            {% endfor %}
+        </div>
     </div>
 
     <br/>
 
-    {{ form_start(form) }}
-    <h3>{% trans %}Create new exercise{% endtrans %}</h3>
-    {{ form_widget(form) }}
-        {% if result is defined %}
-            {% trans %}Exercise succesfully saved{% endtrans %}
-        {%  endif %}
-    <input type="submit" />
-    {{ form_end(form) }}
-
-
-    {% if message is defined %}
-        {{ message }}
-    {% endif %}
-
-    {% if result is defined %}
-        {{ result }}
-    {% endif %}
-
-
-    
-    <br/>
-    <a href="{{ path('trainings') }}">Back</a>
+    <div class="row card">
+        <div class="card-header">
+            {% trans %}Create new exercise{% endtrans %}
+        </div>
+        {{ form_start(form) }}
+        <div class="col">
+            <div class="margin">
+                {{ form_label(form.exercise_name) }}
+                {{ form_widget(form.exercise_name) }}
+            </div>
+            <div class="margin">
+                {{ form_label(form.description) }}
+                {{ form_widget(form.description) }}
+            </div>
+            <input class="margin btn btn-primary" type="submit" />
+            {{ form_end(form) }}
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <a href="/" class="margin btn btn-secondary btn-block">{% trans %}Back{% endtrans %}</a>
+        </div>
+    </div>
+</div>
 {% endblock %}
