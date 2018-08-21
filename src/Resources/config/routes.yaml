@@ -14,6 +14,12 @@ training:
     controller: App\Controller\TrainingController::show
     requirements:
         id: '\d+'
+training_delete:
+    path: /training_delete/{id}
+    controller: App\Controller\TrainingController::delete
+    requirements:
+        id: '\d+'
+
 exercise:
     path: /exercise/{id}
     controller: App\Controller\ExerciseController::index

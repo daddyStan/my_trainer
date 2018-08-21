@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans %}Training{% endtrans %}{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="container">
+        <div class="row">
+            <div class="col"></div>
+            <div class="col  text-center">
+                {% if result is defined %}
+                    {{ result }}
+                {% endif %}
+            </div>
+            <div class="col"></div>
+        </div>
+        <div class="row">
+            <a href="/" class="margin btn btn-secondary btn-block">{% trans %}Back{% endtrans %}</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

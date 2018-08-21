@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Training;
 use App\Repository\ExerciseRepository;
 use App\Repository\TrainingRepository;
 use Doctrine\ORM\EntityManager;
@@ -185,6 +186,22 @@ class TrainingController extends Controller
             'form' => $view,
             'exercises' => $exercises,
             'entity' => $this->getTrainingRepository()->findOneBy(['training_id' => $id]) ?? "Entity not founded"
+        ]);
+    }
+
+    public function delete($id)
+    {
+        try {
+            /** @var Training $t */
+            $training = $this->getTrainingRepository()->findOneBy(['training_id' => $id]);
+            $this->getEm()->remove($training);
+            $this->getEm()->flush();
+            $result = "Successfully deleted";
+        } catch (\Exception $e) {
+            $result = "Something wrong \n $e";
+        }
+        return $this->render('deleted.html.twig', [
+            'result' => $result
         ]);
     }
 }
