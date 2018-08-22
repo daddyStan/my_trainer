@@ -14,6 +14,7 @@ class Day
     private $finish_date;
     private $main_time;
     private $user_id;
+    private $deleted;
 
     public function getDayId(): ?int
     {
@@ -100,6 +101,18 @@ class Day
     public function setUserId(?User $user_id): self
     {
         $this->user_id = $user_id;
+
+        return $this;
+    }
+
+    public function getDeleted(): ?bool
+    {
+        return $this->deleted;
+    }
+
+    public function setDeleted(bool $deleted): self
+    {
+        $this->deleted = $deleted;
 
         return $this;
     }

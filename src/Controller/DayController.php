@@ -171,7 +171,8 @@ class DayController extends Controller
                 'user_id'       => $this->getUser(),
                 'training_id'   => $this->getTrainigRepository()->findOneBy([
                     'training_id' => $day->getTrainingId()
-                ])
+                ]),
+                'deleted' => false
             ]);
 
             return $this->render('day/day.html.twig', [
@@ -179,9 +180,12 @@ class DayController extends Controller
                 'grid'            => $grid,
                 'day'             => $day,
             ]);
+
         } else {
+
             $grid = $this->getTrainigRepository()->findBy([
-                'user_id' => $this->getUser()
+                'user_id' => $this->getUser(),
+                'deleted' => false
             ]);
 
             return $this->render('day/index.html.twig', [
@@ -207,7 +211,8 @@ class DayController extends Controller
             'user_id'       => $this->getUser(),
             'training_id'   => $this->getTrainigRepository()->findOneBy([
                 'training_id' => $day->getTrainingId()
-            ])
+            ]),
+            'deleted' => false
         ]);
 
         return $this->render('day/day.html.twig', [
@@ -229,7 +234,9 @@ class DayController extends Controller
                         date(\DateTimeInterface::W3C)
                     )
                 )
-                ->setTrainingId($training);
+                ->setTrainingId($training)
+                ->setDeleted(false)
+            ;
             $this->getEm()->persist($day);
             $this->getEm()->flush();
 
@@ -305,8 +312,8 @@ class DayController extends Controller
         $grid = $this->getSetRepository()->findBy([
             'user_id'       => $this->getUser()->getUserId(),
             'exercise_id'   => $exrcise_id,
-            'day_id'        => $day
-
+            'day_id'        => $day,
+            'deleted'       => false
         ]);
 
 

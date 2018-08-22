@@ -18,6 +18,11 @@ App\Entity\Set:
             type: datetime
         last_update_date:
             type: datetime
+        deleted:
+          type: boolean
+          nullable: false
+          options:
+            default: false
     manyToOne:
         exercise_id:
           targetEntity: App\Entity\Exercise

@@ -17,6 +17,11 @@ App\Entity\Training:
             type: datetime
         last_update_date:
             type: datetime
+        deleted:
+          type: boolean
+          nullable: false
+          options:
+            default: false
     oneToMany:
         exercises:
           targetEntity: App\Entity\Exercise

@@ -29,7 +29,10 @@ class ExerciseRepository extends ServiceEntityRepository
                     \DateTimeInterface::W3C,
                     date(\DateTimeInterface::W3C)
                 ))
-                ->setUserId($user);
+                ->setUserId($user)
+                ->setDeleted(false)
+            ;
+
             $this->getEntityManager()->persist($training);
             $this->getEntityManager()->flush();
 

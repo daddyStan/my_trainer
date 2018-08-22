@@ -2,17 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Exercise;
 use App\Repository\ExerciseRepository;
 use App\Repository\SetRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use Symfony\Component\Form\Extension\Core\Type\RangeType;
-use Symfony\Component\Form\Forms;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class ExerciseController extends Controller
 {
@@ -88,57 +83,33 @@ class ExerciseController extends Controller
 
     public function index($id)
     {
-//        $exerciseEntity = $this->getExerciseRepository()->findOneBy(['exercise_id' => $id]);
-//        $result = null;
-//        $formFactory = Forms::createFormFactoryBuilder()
-//            ->getFormFactory();
-//
-//        $form = $formFactory->createBuilder(
-//            FormType::class,null, [
-//                'action' => "/exercise/$id",
-//                'method' => 'POST'
-//            ]
-//        )
-//            ->add("tries", TextType::class, [
-//                'attr' => [
-//                    'value' => 0,
-//                    'inputmode' => 'numeric',
-//                    'pattern'   => '[0-9]*'
-//                ]
-//            ])
-//            ->add("weight", TextType::class, [
-//                'attr' => [
-//                    'value' => 0,
-//                    'inputmode' => 'numeric',
-//                    'pattern'   => '[0-9]*'
-//                ]
-//            ])
-//            ->add("comment", TextareaType::class)
-//            ->getForm();
-//
-//        $view = $form->createView();
-//        $form->handleRequest();
-//
-//        if ($form->isSubmitted()) {
-//            $data = $form->getData();
-//            if ( $form->getErrors() ) {
-//            $result = $this
-//                ->getSetRepository()
-//                ->saveSet(
-//                    $data['comment'],
-//                    $data['tries'],
-//                    $data['weight'],
-//                    $exerciseEntity
-//                );
-//            }
-//        }
-
+        if (!is_null($this->getUser()->getDayId())) {
+            return $this->redirectToRoute('day',[]);
+        }
 
         return $this->render('exercise/index.html.twig', [
             'id'              => $id,
-            'exercise'        => $this->getExerciseRepository()->findOneBy(['exercise_id' => $id]),
-//            'form'            => $view,
-//            'result'          => $result
+            'exercise'        => $this->getExerciseRepository()->findOneBy(['exercise_id' => $id, 'deleted' => false]),
+        ]);
+    }
+
+    public function delete($id)
+    {
+        try {
+            /** @var Exercise $training */
+            $exercise = $this->getExerciseRepository()->findOneBy(['exercise_id' => $id]);
+            $exercise->setDeleted(true);
+
+            $this->getEm()->persist($exercise);
+            $this->getEm()->flush();
+
+            $result = "Successfully deleted";
+        } catch (\Exception $e) {
+            $result = "Something wrong";
+        }
+
+        return $this->render('deleted.html.twig', [
+            'result' => $result
         ]);
     }
 }
