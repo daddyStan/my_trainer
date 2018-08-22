@@ -91,6 +91,10 @@ class TrainingController extends Controller
 
     public function index()
     {
+        if (!is_null($this->getUser()->getDayId())) {
+            return $this->redirectToRoute('day',[]);
+        }
+
         $result = null;
         $formFactory = Forms::createFormFactoryBuilder()
             ->getFormFactory();
@@ -123,9 +127,10 @@ class TrainingController extends Controller
                 );
         }
 
-        $trainingsSearch = $this->getTrainingRepository()->findby(
-            ['user_id' => $this->getUser()]
-        );
+        $trainingsSearch = $this->getTrainingRepository()->findby([
+            'user_id' => $this->getUser(),
+            'deleted' => false
+        ]);
 
         return $this->render('training/index.html.twig', [
             'controller_name' => 'TrainingController',
@@ -139,6 +144,10 @@ class TrainingController extends Controller
 
     public function show($id)
     {
+        if (!is_null($this->getUser()->getDayId())) {
+            return $this->redirectToRoute('day',[]);
+        }
+
         $trainingEntity = $this->getTrainingRepository()->findOneBy(['training_id' => $id]);
 
         $result = null;
@@ -177,7 +186,8 @@ class TrainingController extends Controller
         $exercises = $this->getExerciseRepository()->findBy(
             [
                 'training_id' => $id,
-                'user_id' => $this->getUser()
+                'user_id' => $this->getUser(),
+                'deleted' => false
             ]
         );
 
@@ -192,14 +202,18 @@ class TrainingController extends Controller
     public function delete($id)
     {
         try {
-            /** @var Training $t */
+            /** @var Training $training */
             $training = $this->getTrainingRepository()->findOneBy(['training_id' => $id]);
-            $this->getEm()->remove($training);
+            $training->setDeleted(true);
+
+            $this->getEm()->persist($training);
             $this->getEm()->flush();
+
             $result = "Successfully deleted";
         } catch (\Exception $e) {
-            $result = "Something wrong \n $e";
+            $result = "Something wrong";
         }
+
         return $this->render('deleted.html.twig', [
             'result' => $result
         ]);

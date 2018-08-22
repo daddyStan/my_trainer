@@ -17,6 +17,11 @@ App\Entity\Day:
             type: string
             length: 40
             nullable: true
+        deleted:
+          type: boolean
+          nullable: false
+          options:
+            default: false
     manyToOne:
         training_id:
           targetEntity: App\Entity\Training
@@ -24,18 +29,6 @@ App\Entity\Day:
             name: training_id
             referencedColumnName: training_id
             nullable: false
-        exercise_id:
-          targetEntity: App\Entity\Exercise
-          joinColumn:
-            name: exercise_id
-            referencedColumnName: exercise_id
-            nullable: true
-        set_id:
-          targetEntity: App\Entity\Set
-          joinColumn:
-            name: set_id
-            referencedColumnName: set_id
-            nullable: true
         user_id:
           targetEntity: App\Entity\User
           joinColumn:

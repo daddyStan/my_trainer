@@ -31,7 +31,10 @@ class SetRepository extends ServiceEntityRepository
                 ->setLastUpdateDate(\DateTime::createFromFormat(
                     \DateTimeInterface::W3C,
                     date(\DateTimeInterface::W3C)
-                ));
+                ))
+                ->setDeleted(false)
+            ;
+
             $this->getEntityManager()->persist($set);
             $this->getEntityManager()->flush();
 

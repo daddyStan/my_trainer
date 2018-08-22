@@ -15,6 +15,7 @@ class Set
     private $exercise_id;
     private $user_id;
     private $day_id;
+    private $deleted;
 
     public function getSetId(): ?int
     {
@@ -113,6 +114,18 @@ class Set
     public function setDayId(?Day $day_id): self
     {
         $this->day_id = $day_id;
+
+        return $this;
+    }
+
+    public function getDeleted(): ?bool
+    {
+        return $this->deleted;
+    }
+
+    public function setDeleted(bool $deleted): self
+    {
+        $this->deleted = $deleted;
 
         return $this;
     }
