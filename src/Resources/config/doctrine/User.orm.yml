@@ -16,7 +16,7 @@ App\Entity\User:
         email:
             type: string
             length: 254
-            unique: true
+            nullable: true
         is_active:
             type: boolean
         registration_date:

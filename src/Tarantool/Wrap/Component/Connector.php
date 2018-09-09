@@ -26,6 +26,25 @@ class Connector
     /** @var ContainerInterface  */
     private $container;
 
+    private $authenticatedClient;
+
+    /**
+     * @return mixed
+     */
+    public function getAuthenticatedClient()
+    {
+        return $this->authenticatedClient;
+    }
+
+    /**
+     * @param mixed $authenticatedClient
+     * @return self
+     */
+    public function setAuthenticatedClient($authenticatedClient): self
+    {
+        $this->authenticatedClient = $authenticatedClient;
+        return $this;
+    }
     /**
      * @return ContainerInterface
      */
@@ -114,7 +133,12 @@ class Connector
             )
         )
             ->setClient(new Client($this->getConnection(),new PurePacker()))
-            ->setMapper(new Mapper($this->client));
+            ->setMapper(new Mapper($this->client))
+            ->setAuthenticatedClient($this->client->authenticate(
+                $this->getContainer()->getParameter('tarantool_user'),
+                $this->getContainer()->getParameter('tarantool_pass')
+            ))
+        ;
     }
 
     /**
@@ -126,4 +150,25 @@ class Connector
         return $this->getClient()->getSpace($spaceName);
     }
 
+    /**
+     * @return Connector
+     * @throws \Exception
+     */
+    public function setUserLastTrainingSpace(): self
+    {
+        /** @var Mapper $mapper */
+        $mapper = $this->getMapper()->getSchema()->createSpace('user_last_training_day');
+        $mapper->addProperties([
+            'user_id' => 'unsigned',
+            'day_id' => 'string',
+            'creation_date' => 'string',
+            'main_time' => 'string',
+        ]);
+        $mapper->createIndex([
+            'type' => 'hash',
+            'fields' => ['user_id'],
+        ]);
+
+        return $this;
+    }
 }

@@ -17,6 +17,8 @@ use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Forms;
+use Symfony\Component\HttpFoundation\Request;
+use Tarantool\Mapper\Repository;
 
 class DayController extends Controller
 {
@@ -253,7 +255,7 @@ class DayController extends Controller
         return true;
     }
 
-    public function exercise($day_id, $exrcise_id, $training_id)
+    public function exercise($day_id, $exrcise_id, $training_id, Request $request)
     {
         $exerciseEntity = $this->getExerciseRepository()->findOneBy(['exercise_id' => $exrcise_id]);
         $result = null;
@@ -268,7 +270,7 @@ class DayController extends Controller
         )
             ->add("tries", TextType::class, [
                 'attr' => [
-                    'value' => 0,
+                    'value' => (integer)$request->get("form")["tries"] ?? 0,
                     'inputmode' => 'numeric',
                     'pattern'   => '[0-9]*',
                     'class' => 'form-control'
@@ -276,7 +278,7 @@ class DayController extends Controller
             ])
             ->add("weight", TextType::class, [
                 'attr' => [
-                    'value' => 0,
+                    'value' => (integer)$request->get("form")["weight"] ?? 0,
                     'inputmode' => 'numeric',
                     'pattern'   => '[0-9]*',
                     'class' => 'form-control'
@@ -295,7 +297,6 @@ class DayController extends Controller
 
         if ($form->isSubmitted()) {
             $data = $form->getData();
-            if ( $form->getErrors() ) {
             $result = $this
                 ->getSetRepository()
                 ->saveSet(
@@ -306,7 +307,6 @@ class DayController extends Controller
                     $this->getUser(),
                     $day
                 );
-            }
         }
 
         $grid = $this->getSetRepository()->findBy([
@@ -327,14 +327,36 @@ class DayController extends Controller
 
     public function trainingFinish($day_id)
     {
+        $tarantool = $this->get("tarantool.wrap");
+
         /** @var Day $day */
         $day = $this->getDayRepository()->findOneBy(['day_id' => $day_id]);
 
         $message = $this->getDayRepository()->updateAndCloseDay($day, $this->getUser());
 
+        /** @var Repository $repository */
+        $repository = $tarantool->getMapper()->getRepository('user_last_training_day');
+
+
+        $user_last_training_day = $repository->findOne($this->getUser()->getUserId());
+
+        if (!is_null($user_last_training_day)) {
+            $user_last_training_day->day_id = $day_id;
+            $user_last_training_day->creation_date = $message[1]->getCreationDate()->format('m-d');
+            $user_last_training_day->main_time = $message[1]->getMainTime();
+            $tarantool->getMapper()->save($user_last_training_day);
+        } else {
+            $tarantool->getClient()->getSpace('user_last_training_day')->insert([
+                $this->getUser()->getUserId(),
+                $day_id,
+                $message[1]->getCreationDate()->format('Y-m-d'),
+                $message[1]->getMainTime()
+            ]);
+        }
+
         return $this->render('day/finish.html.twig', [
             'controller_name' => 'DayController',
-            'message'         => $message
+            'message'         => $message[0]
         ]);
 
     }
