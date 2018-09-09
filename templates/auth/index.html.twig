@@ -6,6 +6,16 @@
     <div class="container">
         <div class="row">
             <div class="col"></div>
+            <div class="col bg-light text-black-50">
+                {% if user_last_training_day is not null %}
+                    {% trans %}Last training day was{% endtrans %} {{ user_last_training_day.creation_date }}<br>
+                    {% trans %}You trained for{% endtrans %} {{ user_last_training_day.main_time }}
+                {% endif %}
+            </div>
+            <div class="col"></div>
+        </div>
+        <div class="row">
+            <div class="col"></div>
             <div class="margin col" style="text-align: center">
                 <a class="btn btn-primary btn-lg btn-block" href="{{ path('trainings') }}" role="button">{% trans %}Trainings{% endtrans %}</a>
             </div>

@@ -52,3 +52,6 @@ training_finish:
     controller: App\Controller\DayController:trainingFinish
     requirements:
         day_id: '\d+'
+registration:
+    path: /registration
+    controller: App\Controller\RegistrationController:index

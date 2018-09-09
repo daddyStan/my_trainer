@@ -39,7 +39,7 @@ class DayRepository extends ServiceEntityRepository
         $this->getEntityManager()->persist($user);
         $this->getEntityManager()->flush();
 
-        return $str;
+        return [$str, $day];
     }
 
 //    /**
