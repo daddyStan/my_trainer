@@ -23,26 +23,33 @@
             </div>
         </div>
         <div class="row card">
-            <div class="card-header">
-                {% trans %}Create new training{% endtrans %}
-            </div>
-                {{ form_start(form) }}
-                <div class="col">
-                    <div class="margin">
-                        {{ form_label(form.training_name) }}
-                        {{ form_widget(form.training_name) }}
-                    </div>
-                    <div class="margin">
-                        {{ form_label(form.description) }}
-                        {{ form_widget(form.description) }}
-                    </div>
-                    <input class="margin btn btn-primary" type="submit" />
-                    {{ form_end(form) }}
+            <div class="collapse" id="collapseExample">
+                <div class="card card-body">
+                    {{ form_start(form) }}
+                    <div class="col">
+                        <div class="margin">
+                            {{ form_label(form.training_name) }}
+                            {{ form_widget(form.training_name) }}
+                        </div>
+                        <div class="margin">
+                            {{ form_label(form.description) }}
+                            {{ form_widget(form.description) }}
+                        </div>
+                        <input class="margin btn btn-primary" type="submit" />
+                        {{ form_end(form) }}
 
-                    {% if result is defined %}
-                        {{ result }}
-                    {% endif %}
+                        {% if result is defined %}
+                            {{ result }}
+                        {% endif %}
+                    </div>
                 </div>
+            </div>
+            <div class="card-header">
+                <a class="btn btn-primary btn-block" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                    {% trans %}Create new training{% endtrans %}
+                </a>
+            </div>
+
         </div>
         <div class="container">
             <div class="row">

@@ -5,14 +5,12 @@
 {% block body %}
     <div class="container">
         <div class="row">
-            <div class="col"></div>
-            <div class="col bg-light text-black-50">
+            <div class="col bg-light text-black-50 lg">
                 {% if user_last_training_day is not null %}
                     {% trans %}Last training day was{% endtrans %} {{ user_last_training_day.creation_date }}<br>
                     {% trans %}You trained for{% endtrans %} {{ user_last_training_day.main_time }}
                 {% endif %}
             </div>
-            <div class="col"></div>
         </div>
         <div class="row">
             <div class="col"></div>
