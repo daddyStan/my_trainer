@@ -132,7 +132,7 @@ class DayController extends Controller
     /**
      * @return mixed
      */
-    public function getEm()
+    public function getEm(): EntityManager
     {
         return $this->em;
     }
@@ -316,12 +316,35 @@ class DayController extends Controller
             'deleted'       => false
         ]);
 
+        /** @var Day $lastTraining */
+        $lastTraining = $this->getEm()->getConnection()->createQueryBuilder()
+            ->select("d.day_id")
+            ->from("day d")
+            ->where("d.user_id=:user_id")
+            ->andWhere("d.training_id=:training_id")
+            ->setParameters(["user_id" => $this->getUser()->getUserId(), "training_id" => $training_id])
+            ->orderBy("d.day_id","DESC")
+            ->setMaxResults(2)
+            ->execute()
+            ->fetchAll()
+        ;
+
+        $sets = [];
+
+        if (isset($lastTraining[1])) {
+            $sets = $this->getSetRepository()->findBy([
+               "day_id"       => $lastTraining[1],
+                "exercise_id" => $exrcise_id,
+                "user_id"     => $this->getUser()->getUserId()
+            ], ["set_id" => "ASC"]);
+        }
 
         return $this->render('day/day_sets.html.twig', [
             'controller_name' => 'DayController',
             'grid'            => $grid,
             'form'            => $view,
-            'result'          => $result
+            'result'          => $result,
+            'sets'   => $sets
         ]);
     }
 

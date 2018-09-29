@@ -4,6 +4,12 @@
 
 {% block body %}
     <div class="container">
+        {% if grid is empty %}
+            {% if sets is not empty %}
+                {% trans %}You have{% endtrans %} {{ sets | last.getTries }} {% trans %}tries{% endtrans %} {% trans %}with{% endtrans %} {% trans %}weight{% endtrans %} {{ sets | last.getWeight }}{% trans %}kg{% endtrans %}
+            {% endif %}
+        {% endif %}
+
         {% if grid is not empty %}
             <div class="row">
                 <div class="col">
@@ -20,10 +26,14 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {% for row in grid %}
+                                {% for i in 0 .. grid | length -1 %}
                                 <tr>
-                                    <td>{{ row.getTries }}</td>
-                                    <td>{{ row.getWeight }}  {% trans %}kg{% endtrans %}</td>
+                                    <td>{{ grid[i].getTries }} {% if sets[i] is defined %}
+                                            ({{ sets[i].getTries }})
+                                            {% if (grid[i].getTries * grid[i].getWeight) > (sets[i].getTries * sets[i].getWeight) %} <span class="green">⬆</span> {% endif %}
+                                            {% if (grid[i].getTries * grid[i].getWeight) < (sets[i].getTries * sets[i].getWeight) %} <span class="red">⬇</span> {% endif %}
+                                        {% endif %}</td>
+                                    <td>{{ grid[i].getWeight }}  {% trans %}kg{% endtrans %} {% if sets[i] is defined %}({{ sets[i].getWeight }}){% endif %}</td>
                                 </tr>
                                 {% else %}
                                     {% trans %}No sets have been found{% endtrans %}.
