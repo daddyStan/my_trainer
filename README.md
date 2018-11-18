@@ -2,7 +2,7 @@
 
 Deploy:
   - Start containers: ``` docker-compose up -d --build ``` in ``` ./Docker ```
-  - use command ```  docker-compose exec fpm  composer --working-dir=html update ``` to update dependecies with COMPOSER
+  - use command ```  docker-compose exec fpm  composer --working-dir=html update ``` to update dependecies
   - Edit env-file (``` ./.env ```) to add correct parameters
 ```sh
 APP_ENV=dev
