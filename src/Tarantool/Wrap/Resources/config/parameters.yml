@@ -1,4 +1,0 @@
-parameters:
-     tarantool.connection: 'tcp://tarantool:3301'
-     tarantool_user: tarantool_my_trainer
-     tarantool_pass: er4ddJf4thfHHf34f77

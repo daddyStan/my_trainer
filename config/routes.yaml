@@ -1,2 +1,0 @@
-my_trainer_auth:
-    resource: "../src/Resources/config/routes.yaml"
