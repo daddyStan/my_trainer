@@ -19,9 +19,26 @@ training_delete:
     controller: App\Controller\TrainingController::delete
     requirements:
         id: '\d+'
+
+exercise_list:
+    path: /exercise/list
+    controller: App\Controller\ExerciseController::index
+exercise_create:
+    path: /exercise/create
+    controller: App\Controller\ExerciseController::create
+#exercise_user_list:
+#    path: /exercise/list/user/{user_id}
+#    controller: App\Controller\ExerciseController::index
+#    requirements:
+#            user_id: '\d+'
+exercise_edit:
+    path: /exercise/edit/{id}
+    controller: App\Controller\ExerciseController::edit
+    requirements:
+        id: '\d+'
 exercise:
     path: /exercise/{id}
-    controller: App\Controller\ExerciseController::index
+    controller: App\Controller\ExerciseController::view
     requirements:
         id: '\d+'
 exercise_delete:

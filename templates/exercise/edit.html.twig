@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans %}Exercises{% endtrans %}{% endblock %}
+
+{% block body %}
+    <div class="container-fluid main">
+        <br/>
+        <h3>Редактирование упражнения</h3>
+        <br/>
+    </div>
+    <div class="container">
+        {{ form_start(form, {'method': 'POST', 'attr': {'class': 'form'}}) }}
+            {{ form_errors(form) }}
+
+        <div class="form-group">
+            {{ form_widget(form.exercise_name, {'attr':{'class': 'form-control'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_widget(form.description, {'attr':{'class': 'form-control'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_widget(form.submit, {'attr': {'class' : 'btn btn-primary btn-block'} }) }}
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

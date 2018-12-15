@@ -3,11 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Exercise;
+use App\Forms\ExerciseForm;
 use App\Repository\ExerciseRepository;
 use App\Repository\SetRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 class ExerciseController extends Controller
 {
@@ -81,7 +83,58 @@ class ExerciseController extends Controller
              ->setSetRepository($this->em->getRepository('App:Set'));
     }
 
-    public function index($id)
+    public function index()
+    {
+        $exercises = $this->exerciseRepository->findAll();
+        return $this->render('exercise/list.html.twig', [
+            'is_training' => $this->getUser()->getDayId(),
+            'exercises' => $exercises
+        ]);
+    }
+
+    public function create(Request $request)
+    {
+        $exercise = new Exercise();
+
+        $form = $this->createForm(ExerciseForm::class, $exercise);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()){
+            $exercise = $form->getData();
+            $exercise->setDeleted(False);
+            $exercise->setUserId($this->getUser());
+
+            if ($this->exerciseRepository->save($exercise))
+                return $this->redirectToRoute('exercise_list');
+        }
+        return $this->render('exercise/create.html.twig', [
+            'is_training' => $this->getUser()->getDayId(),
+            'form' => $form->createView()
+        ]);
+    }
+
+    public function edit($id)
+    {
+        $exercise = $this->exerciseRepository->find($id);
+
+        $form = $this->createForm(ExerciseForm::class, $exercise);
+        $request = Request::createFromGlobals();
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()){
+            $exercise = $form->getData();
+            $exercise->setDeleted(False);
+            $exercise->setUserId($this->getUser());
+
+            if ($this->exerciseRepository->save($exercise))
+                return $this->redirectToRoute('exercise_list');
+        }
+        return $this->render('exercise/create.html.twig', [
+            'is_training' => $this->getUser()->getDayId(),
+            'form' => $form->createView()
+        ]);
+    }
+
+    public function view($id)
     {
         if (!is_null($this->getUser()->getDayId())) {
             return $this->redirectToRoute('day',[]);
