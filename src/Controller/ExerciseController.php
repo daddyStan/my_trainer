@@ -90,6 +90,7 @@ class ExerciseController extends Controller
         return $this->render('exercise/index.html.twig', [
             'id'              => $id,
             'exercise'        => $this->getExerciseRepository()->findOneBy(['exercise_id' => $id, 'deleted' => false]),
+            'is_training' => $this->getUser()->getDayId()
         ]);
     }
 
@@ -109,7 +110,8 @@ class ExerciseController extends Controller
         }
 
         return $this->render('deleted.html.twig', [
-            'result' => $result
+            'result' => $result,
+            'is_training' => $this->getUser()->getDayId()
         ]);
     }
 }

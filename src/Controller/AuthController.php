@@ -21,13 +21,10 @@ class AuthController extends Controller
 
         $user_last_training_day = $repository->find($this->getUser()->getUserId());
 
-        if (!is_null($this->getUser()->getDayId())) {
-            return $this->redirectToRoute('day',[]);
-        }
-
         return $this->render('auth/index.html.twig', [
-            'controller_name' => 'AuthController',
-            'user_last_training_day' => $user_last_training_day[0] ?? null
+            'controller_name'        => 'AuthController',
+            'user_last_training_day' => $user_last_training_day[0] ?? null,
+            'is_training'             => $this->getUser()->getDayId()
         ]);
     }
 }

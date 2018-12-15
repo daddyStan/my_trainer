@@ -138,7 +138,8 @@ class TrainingController extends Controller
             "trainingsCount"  => count($trainingsSearch),
             "message" => $this->getTrainingRepository()->count([]),
             "result" => $result,
-            "grid"  => $trainingsSearch
+            "grid"  => $trainingsSearch,
+            'is_training' => $this->getUser()->getDayId()
         ]);
     }
 
@@ -195,7 +196,8 @@ class TrainingController extends Controller
             'result' => $result,
             'form' => $view,
             'exercises' => $exercises,
-            'entity' => $this->getTrainingRepository()->findOneBy(['training_id' => $id]) ?? "Entity not founded"
+            'entity' => $this->getTrainingRepository()->findOneBy(['training_id' => $id]) ?? "Entity not founded",
+            'is_training' => $this->getUser()->getDayId()
         ]);
     }
 
@@ -215,7 +217,8 @@ class TrainingController extends Controller
         }
 
         return $this->render('deleted.html.twig', [
-            'result' => $result
+            'result' => $result,
+            'is_training' => $this->getDay()
         ]);
     }
 }
