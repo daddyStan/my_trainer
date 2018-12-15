@@ -13,6 +13,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\RedirectController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -160,31 +161,6 @@ class DayController extends Controller
 
     public function index()
     {
-        $hasDay = !is_null($this->getUser()->getDayId());
-
-        if($hasDay) {
-
-            /** @var Day $day */
-            $day = $this->getDayRepository()->findOneBy([
-                'day_id' => $this->getUser()->getDayId()
-            ]);
-
-            $grid = $this->getExerciseRepository()->findBy([
-                'user_id'       => $this->getUser(),
-                'training_id'   => $this->getTrainigRepository()->findOneBy([
-                    'training_id' => $day->getTrainingId()
-                ]),
-                'deleted' => false
-            ]);
-
-            return $this->render('day/day.html.twig', [
-                'controller_name' => 'DayController',
-                'grid'            => $grid,
-                'day'             => $day,
-            ]);
-
-        } else {
-
             $grid = $this->getTrainigRepository()->findBy([
                 'user_id' => $this->getUser(),
                 'deleted' => false
@@ -192,16 +168,16 @@ class DayController extends Controller
 
             return $this->render('day/index.html.twig', [
                 'controller_name' => 'DayController',
-                'grid'            => $grid
+                'grid'            => $grid,
+                'is_training' => $this->getUser()->getDayId()
             ]);
-        }
     }
 
     public function started($training_id)
     {
         if (is_null($this->getUser()->getDayId())) {
-        $training = $this->getTrainigRepository()->findOneBy(['training_id' => $training_id]);
-        $this->updateUsersDay($this->getUser(), $training);
+            $training = $this->getTrainigRepository()->findOneBy(['training_id' => $training_id]);
+            $this->updateUsersDay($this->getUser(), $training);
         }
 
         /** @var Day $day */
@@ -220,7 +196,8 @@ class DayController extends Controller
         return $this->render('day/day.html.twig', [
             'controller_name' => 'DayController',
             'grid' => $grid,
-            'day' => $day
+            'day' => $day,
+            'is_training' => $this->getUser()->getDayId()
         ]);
     }
 
@@ -344,7 +321,9 @@ class DayController extends Controller
             'grid'            => $grid,
             'form'            => $view,
             'result'          => $result,
-            'sets'   => $sets
+            'sets'   => $sets,
+            'is_training' => $this->getUser()->getDayId(),
+            'training' => $training_id
         ]);
     }
 
@@ -379,7 +358,8 @@ class DayController extends Controller
 
         return $this->render('day/finish.html.twig', [
             'controller_name' => 'DayController',
-            'message'         => $message[0]
+            'message'         => $message[0],
+            'is_training' => $this->getUser()->getDayId()
         ]);
 
     }

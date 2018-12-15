@@ -1,9 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{% trans %}Menu{% endtrans %}{% endblock %}
-
 {% block body %}
-    <div class="container">
         <div class="row">
             <div class="col bg-light text-black-50 lg">
                 {% if user_last_training_day is not null %}
@@ -19,12 +16,4 @@
             </div>
             <div class="col"></div>
         </div>
-        <div class="row">
-            <div class="col"></div>
-            <div class="margin col" style="text-align: center">
-        <a class="btn btn-primary btn-lg btn-block " href="{{ path('day') }}" role="button">{% trans %}training_days{% endtrans %}</a>
-            </div>
-            <div class="col"></div>
-        </div>
-    </div>
 {% endblock %}
