@@ -22,13 +22,18 @@ App\Entity\Exercise:
           nullable: false
           options:
             default: false
-    manyToOne:
-        training_id:
+    manyToMany:
+        trainings:
           targetEntity: App\Entity\Training
-          inversedBy: exercises
-          joinColumn:
-            name: training_id
-            referencedColumnName: training_id
+          joinTable:
+            name: exercise_training
+            joinColumns:
+              exercise_id:
+                referencedColumnName: exercise_id
+            inverseJoinColumns:
+              training_id:
+                referencedColumnName: training_id
+    manyToOne:
         user_id:
           targetEntity: App\Entity\User
           joinColumn:

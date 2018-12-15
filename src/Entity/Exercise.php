@@ -16,7 +16,7 @@ class Exercise
     private $description;
     private $creation_date;
     private $last_update_date;
-    private $training_id;
+    private $trainings;
     private $user_id;
     private $sets;
     private $deleted;
@@ -110,18 +110,33 @@ class Exercise
         return $this;
     }
 
-    public function getTrainingId(): ?Training
+    public function getTrainings(): Collection
     {
-        return $this->training_id;
+        return $this->trainings;
     }
 
-    public function setTrainingId(?Training $training_id): self
+    public function addTraining(Training $training): self
     {
-        $this->training_id = $training_id;
+        if (!$this->trainings->contains($training)) {
+            $this->trainings[] = $training;
+            $training->setTrainingId($this);
+        }
 
         return $this;
     }
 
+    public function removeTraining(Training $training): self
+    {
+        if ($this->trainings->contains($training)) {
+            $this->trainings->removeElement($training);
+            // set the owning side to null (unless already changed)
+            if ($training->getTrainingId() === $this) {
+                $training->setTrainingId(null);
+            }
+        }
+
+        return $this;
+    }
     public function getUserId(): ?User
     {
         return $this->user_id;

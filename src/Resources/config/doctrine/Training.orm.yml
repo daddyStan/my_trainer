@@ -22,10 +22,6 @@ App\Entity\Training:
           nullable: false
           options:
             default: false
-    oneToMany:
-        exercises:
-          targetEntity: App\Entity\Exercise
-          mappedBy: training_id
     manyToOne:
         user_id:
           targetEntity: App\Entity\User
