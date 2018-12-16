@@ -55,3 +55,9 @@ training_finish:
 registration:
     path: /registration
     controller: App\Controller\RegistrationController:index
+training_creator:
+    path: /training/create
+    controller: App\Controller\TrainingCreatorController:index
+training_stats:
+    path: /training/stats
+    controller: App\Controller\TrainingStatController:index

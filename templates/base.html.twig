@@ -15,20 +15,20 @@
 </head>
 <header>
     <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">{% trans %}My trainer{% endtrans %}</a>
+        <a class="navbar-brand" href="/">{% trans %}My trainer{% endtrans %}</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Тренировки</a>
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}Trainings{% endtrans %}</a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="/training/list.html">Список</a>
+                        <a class="dropdown-item" href="{{ path('trainings') }}">{% trans %}List{% endtrans %}</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="/training/create.html">Создать</a>
+                        <a class="dropdown-item" href="{{ path('training_creator') }}">Создать</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="/training/runned.html">Выполненые</a>
+                        <a class="dropdown-item" href="{{ path('training_stats') }}">Выполненые</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">

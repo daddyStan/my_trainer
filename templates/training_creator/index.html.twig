@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+{% block title %}Trainings{{ controller_name }}!{% endblock %}
+{% block body %}
+    <div class="row card">
+                {{ form_start(form) }}
+                <div class="col">
+                    <div class="margin">
+                        {{ form_label(form.training_name) }}
+                        {{ form_widget(form.training_name) }}
+                    </div>
+                    <div class="margin">
+                        {{ form_label(form.description) }}
+                        {{ form_widget(form.description) }}
+                    </div>
+                    <input class="margin btn btn-primary" type="submit" />
+                    {{ form_end(form) }}
+
+                    {% if result is defined %}
+                        {{ result }}
+                    {% endif %}
+                </div>
+    </div>
+{% endblock %}

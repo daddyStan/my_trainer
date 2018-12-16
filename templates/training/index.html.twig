@@ -1,20 +1,24 @@
 {% extends 'base.html.twig' %}
 {% block title %}Trainings{{ controller_name }}!{% endblock %}
 {% block body %}
-<div class="">
-    <div class="container" style="">
-        <div class="row">
-            <div class="col"></div>
-            <div class="col"><h1 style="text-align: center">{% trans %}Trainings{% endtrans %}</h1></div><div class="col"></div>
+    <div class="container-fluid main">
+        <div class="main-header d-flex justify-content-between align-items-center">
+            <h3>{% trans %}Trainings{% endtrans %}</h3>
+            <div class="d-flex justify-content-end"><a href="{{ path('training_creator') }}" class="btn btn-success">{% trans %}Add training{% endtrans %}</a></div>
         </div>
-        <div class="row">
-            <div class="container card margin">
+        <br/>
+            <div class="list-group">
                 {% for row in grid %}
                     <div class="row">
                             <div class="margin col">
-                                    <a href="{{ path('training', {'id': row.getTrainingId}) }}"
-                                       class="btn btn-primary btn-lg btn-info btn-block"
-                                       role="button">{{ row.getTrainingName }}</a>
+                                    <a href="{{ path('training', {'id': row.getTrainingId}) }}" class="list-group-item list-group-item-action flex-column align-items-start" role="button">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <h5 class="mb-1">{{ row.getTrainingName }}</h5>
+                                            <small>{{ row.getCreationDate|date('Y.m.d G:i:s') }}</small>
+                                        </div>
+                                        <p class="mb-1">{% trans %}Number of exercises:{% endtrans %} {{ row.getExercises|length }}</p>
+                                        <small>{{ row.getDescription }}</small>
+                                    </a>
                             </div>
                     </div>
                 {% else %}
@@ -22,40 +26,4 @@
                 {% endfor %}
             </div>
         </div>
-        <div class="row card">
-            <div class="collapse" id="collapseExample">
-                <div class="card card-body">
-                    {{ form_start(form) }}
-                    <div class="col">
-                        <div class="margin">
-                            {{ form_label(form.training_name) }}
-                            {{ form_widget(form.training_name) }}
-                        </div>
-                        <div class="margin">
-                            {{ form_label(form.description) }}
-                            {{ form_widget(form.description) }}
-                        </div>
-                        <input class="margin btn btn-primary" type="submit" />
-                        {{ form_end(form) }}
-
-                        {% if result is defined %}
-                            {{ result }}
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-            <div class="card-header">
-                <a class="btn btn-primary btn-block" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                    {% trans %}Create new training{% endtrans %}
-                </a>
-            </div>
-
-        </div>
-        <div class="container">
-            <div class="row">
-                <a href="/" class="margin btn btn-secondary btn-block">Назад</a>
-            </div>
-        </div>
-    </div>
-</div>
 {% endblock %}

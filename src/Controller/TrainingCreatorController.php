@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Training;
 use App\Repository\ExerciseRepository;
 use App\Repository\TrainingRepository;
 use Doctrine\ORM\EntityManager;
@@ -13,7 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Forms;
 
-class TrainingController extends Controller
+class TrainingCreatorController extends Controller
 {
     /** @var EntityManager */
     private $em;
@@ -72,7 +71,7 @@ class TrainingController extends Controller
      * @param EntityManagerInterface $em
      * @return TrainingController
      */
-    public function setEm(EntityManagerInterface $em): TrainingController
+    public function setEm(EntityManagerInterface $em): TrainingCreatorController
     {
         $this->em = $em;
         return $this;
@@ -85,9 +84,10 @@ class TrainingController extends Controller
     public function __construct(EntityManagerInterface $em)
     {
         $this->setEm($em)
-             ->setTrainingRepository($this->em->getRepository('App:Training'))
-             ->setExerciseRepository($this->em->getRepository('App:Exercise'));
+            ->setTrainingRepository($this->em->getRepository('App:Training'))
+            ->setExerciseRepository($this->em->getRepository('App:Exercise'));
     }
+
 
     public function index()
     {
@@ -128,93 +128,15 @@ class TrainingController extends Controller
             'deleted' => false
         ]);
 
-        return $this->render('training/index.html.twig', [
-            'controller_name' => 'TrainingController',
+        return $this->render('training_creator/index.html.twig', [
+            'controller_name' => 'TrainingCreatorController',
+            'is_training' => $this->getUser()->getDayId(),
             'form'            => $view,
             "trainingsCount"  => count($trainingsSearch),
             "message" => $this->getTrainingRepository()->count([]),
             "result" => $result,
             "grid"  => $trainingsSearch,
-            'is_training' => $this->getUser()->getDayId()
-        ]);
-    }
 
-    public function show($id)
-    {
-        if (!is_null($this->getUser()->getDayId())) {
-            return $this->redirectToRoute('day',[]);
-        }
-
-        $trainingEntity = $this->getTrainingRepository()->findOneBy(['training_id' => $id]);
-
-        $result = null;
-        $formFactory = Forms::createFormFactoryBuilder()
-            ->getFormFactory();
-
-        $form = $formFactory->createBuilder(
-            FormType::class,null, [
-                'action' => "/training/$id",
-                'method' => 'POST'
-            ]
-        )
-            ->add("exercise_name", TextType::class,[
-                'attr' => ['class' => 'form-control'],
-            ])
-            ->add("description", TextareaType::class,[
-                'attr' => ['class' => 'form-control'],
-            ])
-            ->getForm();
-
-        $view = $form->createView();
-        $form->handleRequest();
-
-        if ($form->isSubmitted()) {
-            $data = $form->getData();
-            $result = $this
-                ->getExerciseRepository()
-                ->saveExercise(
-                    $data['exercise_name'],
-                    $data['description'],
-                    $trainingEntity,
-                    $this->getUser()
-                );
-        }
-
-        $exercises = $this->getExerciseRepository()->findBy(
-            [
-                'training_id' => $id,
-                'user_id' => $this->getUser(),
-                'deleted' => false
-            ]
-        );
-
-        return $this->render('training/show.html.twig', [
-            'result' => $result,
-            'form' => $view,
-            'exercises' => $exercises,
-            'entity' => $this->getTrainingRepository()->findOneBy(['training_id' => $id]) ?? "Entity not founded",
-            'is_training' => $this->getUser()->getDayId()
-        ]);
-    }
-
-    public function delete($id)
-    {
-        try {
-            /** @var Training $training */
-            $training = $this->getTrainingRepository()->findOneBy(['training_id' => $id]);
-            $training->setDeleted(true);
-
-            $this->getEm()->persist($training);
-            $this->getEm()->flush();
-
-            $result = "Successfully deleted";
-        } catch (\Exception $e) {
-            $result = "Something wrong";
-        }
-
-        return $this->render('deleted.html.twig', [
-            'result' => $result,
-            'is_training' => $this->getDay()
         ]);
     }
 }
