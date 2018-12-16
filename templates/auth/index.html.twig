@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-        <div class="row">
+        <div class="">
             <div class="col bg-light text-black-50 lg">
                 {% if user_last_training_day is not null %}
                     {% trans %}Last training day was{% endtrans %} {{ user_last_training_day.creation_date }}<br>
@@ -9,6 +9,7 @@
                 {% endif %}
             </div>
         </div>
+    <div class="container">
         <div class="row">
             <div class="col"></div>
             <div class="margin col" style="text-align: center">
@@ -16,4 +17,5 @@
             </div>
             <div class="col"></div>
         </div>
+    </div>
 {% endblock %}

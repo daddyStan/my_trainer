@@ -4,6 +4,10 @@ services:
         class: App\Controller\TrainingController
         arguments:
             - '@doctrine.orm.entity_manager'
+    App\Controller\TrainingCreatorController:
+        class: App\Controller\TrainingController
+        arguments:
+        - '@doctrine.orm.entity_manager'
     App\Controller\ExerciseController:
         class: App\Controller\ExerciseController
         arguments:
