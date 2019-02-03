@@ -13,7 +13,6 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Bundle\FrameworkBundle\Controller\RedirectController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -185,13 +184,16 @@ class DayController extends Controller
             'day_id' => $this->getUser()->getDayId()
         ]);
 
-        $grid = $this->getExerciseRepository()->findBy([
-            'user_id'       => $this->getUser(),
-            'training_id'   => $this->getTrainigRepository()->findOneBy([
-                'training_id' => $day->getTrainingId()
-            ]),
-            'deleted' => false
-        ]);
+        $grid = $this->getEm()->getConnection()->createQueryBuilder()
+            ->select('e.*')
+            ->from('exercise', 'e')
+            ->leftJoin('e', 'trainings', 't', 't.exercise_id=e.exercise_id')
+            ->where('e.deleted=false')
+            ->andWhere('t.training_id=:training')
+            ->setParameter('training',$training_id)
+            ->execute()
+            ->fetchAll()
+        ;
 
         return $this->render('day/day.html.twig', [
             'controller_name' => 'DayController',
@@ -293,37 +295,33 @@ class DayController extends Controller
             'deleted'       => false
         ]);
 
-        /** @var Day $lastTraining */
-        $lastTraining = $this->getEm()->getConnection()->createQueryBuilder()
-            ->select("d.day_id")
-            ->from("day d")
-            ->where("d.user_id=:user_id")
-            ->andWhere("d.training_id=:training_id")
-            ->setParameters(["user_id" => $this->getUser()->getUserId(), "training_id" => $training_id])
-            ->orderBy("d.day_id","DESC")
-            ->setMaxResults(2)
-            ->execute()
+        $user_id = $this->getUser()->getUserId();
+
+        /** Получаем все подходы в ближайшем тренировочном дне, id которого меньше актуального; в этом упражнении, у этого пользователя */
+        $lastTraining = $this->getEm()->getConnection()
+            ->query("
+                SELECT s.*, max(s.day_id) as day_max
+                FROM set s
+                WHERE s.user_id = $user_id
+                  AND s.exercise_id = $exrcise_id
+                  and s.day_id = (
+                       SELECT max(s.day_id)
+                       FROM set s
+                       WHERE s.day_id < $day_id
+                )
+                group by s.set_id, s.day_id;
+            ")
             ->fetchAll()
         ;
-
-        $sets = [];
-
-        if (isset($lastTraining[1])) {
-            $sets = $this->getSetRepository()->findBy([
-               "day_id"       => $lastTraining[1],
-                "exercise_id" => $exrcise_id,
-                "user_id"     => $this->getUser()->getUserId()
-            ], ["set_id" => "ASC"]);
-        }
 
         return $this->render('day/day_sets.html.twig', [
             'controller_name' => 'DayController',
             'grid'            => $grid,
             'form'            => $view,
             'result'          => $result,
-            'sets'   => $sets,
             'is_training' => $this->getUser()->getDayId(),
-            'training' => $training_id
+            'training' => $training_id,
+            'sets' => $lastTraining
         ]);
     }
 

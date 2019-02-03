@@ -40,6 +40,7 @@ class TrainingRepository extends ServiceEntityRepository
             return "ERROR \n $e";
         }
     }
+
 //    /**
 //     * @return User[] Returns an array of User objects
 //     */

@@ -1,41 +1,46 @@
 App\Entity\Exercise:
-    type: entity
-    repositoryClass: App\Repository\ExerciseRepository
-    table: exercise
-    id:
-        exercise_id:
-            type: integer
-            generator: { strategy: IDENTITY }
-    fields:
-        exercise_name:
-            type: string
-            length: 256
-        description:
-            type: string
-            length: 2056
-        creation_date:
-            type: datetime
-        last_update_date:
-            type: datetime
-        deleted:
-          type: boolean
-          nullable: false
-          options:
-            default: false
-    manyToOne:
-        training_id:
-          targetEntity: App\Entity\Training
-          inversedBy: exercises
-          joinColumn:
-            name: training_id
+  type: entity
+  repositoryClass: App\Repository\ExerciseRepository
+  table: exercise
+  id:
+    exercise_id:
+      type: integer
+      generator: { strategy: IDENTITY }
+  fields:
+    exercise_name:
+      type: string
+      length: 256
+    description:
+      type: string
+      length: 2056
+    creation_date:
+      type: datetime
+    last_update_date:
+      type: datetime
+    deleted:
+      type: boolean
+      nullable: false
+      options:
+        default: false
+  manyToMany:
+    trainings:
+      targetEntity: App\Entity\Training
+      joinTable:
+        name: trainings
+        joinColumns:
+          exercise_id:
+            referencedColumnName: exercise_id
+        inverseJoinColumns:
+          training_id:
             referencedColumnName: training_id
-        user_id:
-          targetEntity: App\Entity\User
-          joinColumn:
-            name: user_id
-            referencedColumnName: user_id
-            nullable: false
-    oneToMany:
-        sets:
-          targetEntity: App\Entity\Set
-          mappedBy: exercise_id
+  manyToOne:
+    user_id:
+      targetEntity: App\Entity\User
+      joinColumn:
+        name: user_id
+        referencedColumnName: user_id
+        nullable: false
+  oneToMany:
+    sets:
+      targetEntity: App\Entity\Set
+      mappedBy: exercise_id

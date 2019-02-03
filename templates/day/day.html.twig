@@ -11,9 +11,9 @@
                     {% for row in grid %}
                         <div class="row">
                             <div class="margin col">
-                                <a href="{{ path('day_exercise', {'day_id': day.dayId, 'training_id':day.getTrainingId.getTrainingId, 'exrcise_id':row.getExerciseId}) }}"
+                                <a href="{{ path('day_exercise', {'day_id': day.dayId, 'training_id':day.getTrainingId.getTrainingId, 'exrcise_id':row.exercise_id}) }}"
                                    class="btn btn-lg btn-success btn-block"
-                                   role="button">{{ row.getExerciseName }}</a>
+                                   role="button">{{ row.exercise_name }}</a>
                             </div>
                         </div>
                     {% else %}

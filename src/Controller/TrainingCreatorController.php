@@ -97,7 +97,7 @@ class TrainingCreatorController extends Controller
 
         $form = $formFactory->createBuilder(
             FormType::class,null, [
-                'action' => '/trainings',
+                'action' => '/training/create',
                 'method' => 'POST',
             ]
         )
@@ -129,7 +129,6 @@ class TrainingCreatorController extends Controller
         ]);
 
         return $this->render('training_creator/index.html.twig', [
-            'controller_name' => 'TrainingCreatorController',
             'is_training' => $this->getUser()->getDayId(),
             'form'            => $view,
             "trainingsCount"  => count($trainingsSearch),

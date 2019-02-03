@@ -61,3 +61,15 @@ training_creator:
 training_stats:
     path: /training/stats
     controller: App\Controller\TrainingStatController:index
+exercise_list:
+    path: /exercise/list
+    controller: App\Controller\ExerciseController:ExerciseList
+exercise_create:
+    path: /exercise/create
+    controller: App\Controller\ExerciseController:ExerciseCreate
+add_exercise_to_training:
+    path: /add_exercise_to_training/{ex_id}/{tr_id}/
+    controller: App\Controller\TrainingController:addExerciseToTraining
+    requirements:
+        ex_id: '\d+'
+        tr_id: '\d+'
