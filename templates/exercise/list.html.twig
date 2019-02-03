@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+{% block title %}{% trans %}Exercise{% endtrans %}{% endblock %}
+{% block body %}
+    <div class="container-fluid main">
+        <div class="main-header d-flex justify-content-between align-items-center">
+            <h3>{% trans %}Exercises{% endtrans %}</h3>
+            <div class="d-flex justify-content-end"><a href="{{ path('exercise_create') }}" class="btn btn-success">{% trans %}Add exercise{% endtrans %}</a></div>
+        </div>
+        <br/>
+        <div class="list-group">
+            {% for row in grid %}
+                <div class="row">
+                    <div class="margin col">
+                        <a href="{{ path('exercise', {'id': row.getExerciseId}) }}" class="list-group-item list-group-item-action flex-column align-items-start" role="button">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">{{ row.getExerciseName }}</h5>
+                                <small>{{ row.getCreationDate|date('Y.m.d G:i:s') }}</small>
+                            </div>
+                            <small>{{ row.getDescription }}</small>
+                        </a>
+                    </div>
+                </div>
+            {% else %}
+                {% trans %}No exercises have been found{% endtrans %}.
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

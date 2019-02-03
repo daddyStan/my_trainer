@@ -8,6 +8,10 @@ use App\Repository\SetRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Forms;
 
 class ExerciseController extends Controller
 {
@@ -83,10 +87,6 @@ class ExerciseController extends Controller
 
     public function index($id)
     {
-        if (!is_null($this->getUser()->getDayId())) {
-            return $this->redirectToRoute('day',[]);
-        }
-
         return $this->render('exercise/index.html.twig', [
             'id'              => $id,
             'exercise'        => $this->getExerciseRepository()->findOneBy(['exercise_id' => $id, 'deleted' => false]),
@@ -112,6 +112,56 @@ class ExerciseController extends Controller
         return $this->render('deleted.html.twig', [
             'result' => $result,
             'is_training' => $this->getUser()->getDayId()
+        ]);
+    }
+
+    public function ExerciseList()
+    {
+        return $this->render('exercise/list.html.twig', [
+            'grid'     => $this->getExerciseRepository()->findBy(['deleted' => 0,'user_id' => $this->getUser()]),
+            'is_training' => $this->getUser()->getDayId()
+        ]);
+    }
+
+    public function ExerciseCreate()
+    {
+        $result = null;
+        $formFactory = Forms::createFormFactoryBuilder()
+            ->getFormFactory();
+
+        $form = $formFactory->createBuilder(
+            FormType::class,null, [
+                'action' => "/exercise/create",
+                'method' => 'POST'
+            ]
+        )
+            ->add("exercise_name", TextType::class,[
+                'attr' => ['class' => 'form-control'],
+            ])
+            ->add("description", TextareaType::class,[
+                'attr' => ['class' => 'form-control'],
+            ])
+            ->getForm();
+
+        $view = $form->createView();
+        $form->handleRequest();
+
+        if ($form->isSubmitted()) {
+            $data = $form->getData();
+            $result = $this
+                ->getExerciseRepository()
+                ->saveExercise(
+                    $data['exercise_name'],
+                    $data['description'],
+                    $this->getUser(),
+                    null
+                );
+        }
+
+        return $this->render('exercise/create.html.twig', [
+            'is_training' => $this->getUser()->getDayId(),
+            'form' => $view,
+            'message' => $result ?? ""
         ]);
     }
 }

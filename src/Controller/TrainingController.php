@@ -129,7 +129,7 @@ class TrainingController extends Controller
         ]);
 
         return $this->render('training/index.html.twig', [
-            'controller_name' => 'TrainingController',
+            'exercises' => '5464654',
             'form'            => $view,
             "trainingsCount"  => count($trainingsSearch),
             "message" => $this->getTrainingRepository()->count([]),
@@ -141,59 +141,22 @@ class TrainingController extends Controller
 
     public function show($id)
     {
-        if (!is_null($this->getUser()->getDayId())) {
-            return $this->redirectToRoute('day',[]);
-        }
-
+        /** @var Training $trainingEntity */
         $trainingEntity = $this->getTrainingRepository()->findOneBy(['training_id' => $id]);
 
-        $result = null;
-        $formFactory = Forms::createFormFactoryBuilder()
-            ->getFormFactory();
-
-        $form = $formFactory->createBuilder(
-            FormType::class,null, [
-                'action' => "/training/$id",
-                'method' => 'POST'
-            ]
-        )
-            ->add("exercise_name", TextType::class,[
-                'attr' => ['class' => 'form-control'],
-            ])
-            ->add("description", TextareaType::class,[
-                'attr' => ['class' => 'form-control'],
-            ])
-            ->getForm();
-
-        $view = $form->createView();
-        $form->handleRequest();
-
-        if ($form->isSubmitted()) {
-            $data = $form->getData();
-            $result = $this
-                ->getExerciseRepository()
-                ->saveExercise(
-                    $data['exercise_name'],
-                    $data['description'],
-                    $trainingEntity,
-                    $this->getUser()
-                );
-        }
-
-        $exercises = $this->getExerciseRepository()->findBy(
-            [
-                'training_id' => $id,
-                'user_id' => $this->getUser(),
-                'deleted' => false
-            ]
+        $exercises = $this->getExerciseRepository()->findExercisesListBy(
+                $trainingEntity,
+                $this->getUser()
         );
 
+        $exercisesList = $this->getExerciseRepository()->findBy( [ 'deleted' => false, 'user_id' => $this->getUser()->getUserId()] );
+
         return $this->render('training/show.html.twig', [
-            'result' => $result,
-            'form' => $view,
             'exercises' => $exercises,
             'entity' => $this->getTrainingRepository()->findOneBy(['training_id' => $id]) ?? "Entity not founded",
-            'is_training' => $this->getUser()->getDayId()
+            'is_training' => $this->getUser()->getDayId(),
+            'exercises_list' => $exercisesList,
+            'training' => $trainingEntity
         ]);
     }
 
@@ -214,7 +177,18 @@ class TrainingController extends Controller
 
         return $this->render('deleted.html.twig', [
             'result' => $result,
-            'is_training' => $this->getDay()
+            'is_training' => $this->getUser()->getDayId()
         ]);
+    }
+
+    /**
+     * @param $ex_id
+     * @param $tr_id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function addExerciseToTraining($ex_id, $tr_id)
+    {
+        $this->getExerciseRepository()->updateExercise($ex_id, $tr_id);
+        return $this->redirect('/training/' . $tr_id);
     }
 }

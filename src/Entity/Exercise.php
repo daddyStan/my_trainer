@@ -1,11 +1,8 @@
 <?php
-
 namespace App\Entity;
-
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ExerciseRepository")
  */
@@ -16,14 +13,15 @@ class Exercise
     private $description;
     private $creation_date;
     private $last_update_date;
-    private $training_id;
     private $user_id;
     private $sets;
     private $deleted;
+    private $trainings;
 
     public function __construct()
     {
         $this->sets = new ArrayCollection();
+        $this->trainings = new ArrayCollection();
     }
 
     public function getExerciseId(): ?int
@@ -79,6 +77,18 @@ class Exercise
         return $this;
     }
 
+    public function getDeleted(): ?bool
+    {
+        return $this->deleted;
+    }
+
+    public function setDeleted(bool $deleted): self
+    {
+        $this->deleted = $deleted;
+
+        return $this;
+    }
+
     /**
      * @return Collection|Set[]
      */
@@ -110,18 +120,6 @@ class Exercise
         return $this;
     }
 
-    public function getTrainingId(): ?Training
-    {
-        return $this->training_id;
-    }
-
-    public function setTrainingId(?Training $training_id): self
-    {
-        $this->training_id = $training_id;
-
-        return $this;
-    }
-
     public function getUserId(): ?User
     {
         return $this->user_id;
@@ -134,16 +132,29 @@ class Exercise
         return $this;
     }
 
-    public function getDeleted(): ?bool
+    /**
+     * @return Collection|Training[]
+     */
+    public function getTrainings(): Collection
     {
-        return $this->deleted;
+        return $this->trainings;
     }
 
-    public function setDeleted(bool $deleted): self
+    public function addTraining(?Training $training): self
     {
-        $this->deleted = $deleted;
+        if (!$this->trainings->contains($training)) {
+            $this->trainings[] = $training;
+        }
 
         return $this;
     }
 
+    public function removeTraining(Training $training): self
+    {
+        if ($this->trainings->contains($training)) {
+            $this->trainings->removeElement($training);
+        }
+
+        return $this;
+    }
 }

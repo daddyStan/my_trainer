@@ -1,44 +1,44 @@
 App\Entity\Set:
-    type: entity
-    repositoryClass: App\Repository\SetRepository
-    table: set
-    id:
-        set_id:
-            type: integer
-            generator: { strategy: IDENTITY }
-    fields:
-        comment:
-            type: string
-            length: 100
-        weight:
-            type: float
-        tries:
-            type: integer
-        creation_date:
-            type: datetime
-        last_update_date:
-            type: datetime
-        deleted:
-          type: boolean
-          nullable: false
-          options:
-            default: false
-    manyToOne:
-        exercise_id:
-          targetEntity: App\Entity\Exercise
-          inversedBy: sets
-          joinColumn:
-            name: exercise_id
-            referencedColumnName: exercise_id
-        user_id:
-          targetEntity: App\Entity\User
-          joinColumn:
-            name: user_id
-            referencedColumnName: user_id
-            nullable: false
-        day_id:
-          targetEntity: App\Entity\Day
-          joinColumn:
-            name: day_id
-            referencedColumnName: day_id
-            nullable: false
+  type: entity
+  repositoryClass: App\Repository\SetRepository
+  table: set
+  id:
+    set_id:
+      type: integer
+      generator: { strategy: IDENTITY }
+  fields:
+    comment:
+      type: string
+      length: 100
+    weight:
+      type: float
+    tries:
+      type: integer
+    creation_date:
+      type: datetime
+    last_update_date:
+      type: datetime
+    deleted:
+      type: boolean
+      nullable: false
+      options:
+        default: false
+  manyToOne:
+    exercise_id:
+      targetEntity: App\Entity\Exercise
+      inversedBy: sets
+      joinColumn:
+        name: exercise_id
+        referencedColumnName: exercise_id
+    user_id:
+      targetEntity: App\Entity\User
+      joinColumn:
+        name: user_id
+        referencedColumnName: user_id
+        nullable: false
+    day_id:
+      targetEntity: App\Entity\Day
+      joinColumn:
+        name: day_id
+        referencedColumnName: day_id
+        nullable: false

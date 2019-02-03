@@ -4,11 +4,43 @@
 
 {% block body %}
     <div class="container">
-        {% if grid is empty %}
-            {% if sets is not empty %}
-                {% trans %}You have{% endtrans %} {{ sets | last.getTries }} {% trans %}tries{% endtrans %} {% trans %}with{% endtrans %} {% trans %}weight{% endtrans %} {{ sets | last.getWeight }}{% trans %}kg{% endtrans %}
-            {% endif %}
-        {% endif %}
+        <div class="accordion" id="accordionExample">
+            <div class="card">
+                <div class="card-header" id="headingTwo">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            {% trans %}Last training{% endtrans %}
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                    <div class="card-body">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">{% trans %}Weight{% endtrans %}</th>
+                                <th scope="col">{% trans %}Tries{% endtrans %}</th>
+                                <th scope="col">{% trans %}Time{% endtrans %}</th>
+                            </tr>
+                            </thead>
+                            {% for row in sets %}
+                                <tbody>
+                                <tr>
+                                    <th scope="row">{{ row['set_id'] }}</th>
+                                    <td>{{ row['weight'] }}</td>
+                                    <td>{{ row['tries'] }}</td>
+                                    <td>{{ row['last_update_date'] }}</td>
+                                </tr>
+                                </tbody>
+                            {% else %}
+                                {% trans %}No sets have been found{% endtrans %}.
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         {% if grid is not empty %}
             <div class="row">
@@ -28,12 +60,8 @@
                                 <tbody>
                                 {% for i in 0 .. grid | length -1 %}
                                 <tr>
-                                    <td>{{ grid[i].getTries }} {% if sets[i] is defined %}
-                                            ({{ sets[i].getTries }})
-                                            {% if (grid[i].getTries * grid[i].getWeight) > (sets[i].getTries * sets[i].getWeight) %} <span class="green">⬆</span> {% endif %}
-                                            {% if (grid[i].getTries * grid[i].getWeight) < (sets[i].getTries * sets[i].getWeight) %} <span class="red">⬇</span> {% endif %}
-                                        {% endif %}</td>
-                                    <td>{{ grid[i].getWeight }}  {% trans %}kg{% endtrans %} {% if sets[i] is defined %}({{ sets[i].getWeight }}){% endif %}</td>
+                                    <td>{{ grid[i].getTries }} </td>
+                                    <td>{{ grid[i].weight }}  {% trans %}kg{% endtrans %} {% if sets[i] is defined %}({{ sets[i].weight }}){% endif %}</td>
                                 </tr>
                                 {% else %}
                                     {% trans %}No sets have been found{% endtrans %}.
