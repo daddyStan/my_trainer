@@ -1,26 +1,28 @@
 {% extends 'base.html.twig' %}
 {% block title %}{% trans %}Add exercise{% endtrans %}{% endblock %}
 {% block body %}
-    <div class="row card">
-        {{ form_start(form) }}
-        <div class="col">
-            <div class="margin">
-                {{ form_label(form.exercise_name) }}
-                {{ form_widget(form.exercise_name) }}
-            </div>
-            <div class="margin">
-                {{ form_label(form.description) }}
-                {{ form_widget(form.description) }}
-            </div>
-            <input class="margin btn btn-primary" type="submit" />
-            {{ form_end(form) }}
+    <div class="container">
+        <div class="row card">
+            {{ form_start(form) }}
+            <div class="col">
+                <div class="margin">
+                    {{ form_label(form.exercise_name) }}
+                    {{ form_widget(form.exercise_name) }}
+                </div>
+                <div class="margin">
+                    {{ form_label(form.description) }}
+                    {{ form_widget(form.description) }}
+                </div>
+                <input class="margin btn btn-primary" type="submit" />
+                {{ form_end(form) }}
 
-            {% if result is defined %}
-                {{ result }}
-            {% endif %}
+                {% if result is defined %}
+                    {{ result }}
+                {% endif %}
+            </div>
+            <p>
+                {{ message }}
+            </p>
         </div>
-        <p>
-            {{ message }}
-        </p>
     </div>
 {% endblock %}

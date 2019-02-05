@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 {% block title %}{% trans %}Trainings{% endtrans %}{% endblock %}
 {% block body %}
-    <div class="container-fluid main">
+    <div class="container-fluid main" style="margin-top: 20px">
         <div class="main-header d-flex justify-content-between align-items-center">
             <h3>{% trans %}Trainings{% endtrans %}</h3>
             <div class="d-flex justify-content-end"><a href="{{ path('training_creator') }}" class="btn btn-success">{% trans %}Add training{% endtrans %}</a></div>
@@ -10,7 +10,7 @@
             <div class="list-group">
                 {% for row in grid %}
                     <div class="row">
-                            <div class="margin col">
+                            <div class="margin col" style="word-break: break-all;">
                                     <a href="{{ path('training', {'id': row.getTrainingId}) }}" class="list-group-item list-group-item-action flex-column align-items-start" role="button">
                                         <div class="d-flex w-100 justify-content-between">
                                             <h5 class="mb-1">{{ row.getTrainingName }}</h5>

@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="container">
-        <div class="accordion" id="accordionExample">
+        <div class="accordion" id="accordionExample" style="font-size: 10px">
             <div class="card">
                 <div class="card-header" id="headingTwo">
                     <h5 class="mb-0">
@@ -61,7 +61,7 @@
                                 {% for i in 0 .. grid | length -1 %}
                                 <tr>
                                     <td>{{ grid[i].getTries }} </td>
-                                    <td>{{ grid[i].weight }}  {% trans %}kg{% endtrans %} {% if sets[i] is defined %}({{ sets[i].weight }}){% endif %}</td>
+                                    <td>{{ grid[i].weight }}  {% trans %}kg{% endtrans %}</td>
                                 </tr>
                                 {% else %}
                                     {% trans %}No sets have been found{% endtrans %}.
@@ -73,30 +73,31 @@
             </div>
         {% endif %}
         </div>
-
-        <div class="row card">
-            <div class="card-header">
-                <h3>{% trans %}Add new set{% endtrans %}</h3>
-            </div>
-            {{ form_start(form) }}
-            <div class="col">
-                <div class="margin">
-                    {{ form_label(form.tries) }}
-                    {{ form_widget(form.tries) }}
+        <div class="container">
+            <div class="row card">
+                <div class="card-header">
+                    <h3>{% trans %}Add new set{% endtrans %}</h3>
                 </div>
-                <div class="margin">
-                    {{ form_label(form.weight) }}
-                    {{ form_widget(form.weight) }}
+                {{ form_start(form) }}
+                <div class="col">
+                    <div class="margin">
+                        {{ form_label(form.tries) }}
+                        {{ form_widget(form.tries) }}
+                    </div>
+                    <div class="margin">
+                        {{ form_label(form.weight) }}
+                        {{ form_widget(form.weight) }}
+                    </div>
+                    <div class="margin">
+                        {{ form_label(form.comment) }}
+                        {{ form_widget(form.comment) }}
+                    </div>
+                    <input class="margin btn btn-primary" type="submit" />
+                    {{ form_end(form) }}
                 </div>
-                <div class="margin">
-                    {{ form_label(form.comment) }}
-                    {{ form_widget(form.comment) }}
-                </div>
-                <input class="margin btn btn-primary" type="submit" />
-                {{ form_end(form) }}
             </div>
         </div>
-        <div class="container">
+        <div class="container" style="margin-bottom: 100px">
             <div class="row">
                 <a href="{{ path('day_started', {'training_id' : training}) }}" class="margin btn btn-secondary btn-block">{% trans %}Back{% endtrans %}</a>
             </div>
