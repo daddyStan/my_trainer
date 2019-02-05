@@ -3,11 +3,11 @@
 {% block title %}{% trans %}Training{% endtrans %}{% endblock %}
 
 {% block body %}
-<div class="container">
+<div class="container" style="word-break: break-all;">
     <div class="row">
-        <div class="col"></div>
-        <div class="col"><h1 style="text-align: center">{{ entity.getTrainingName }}</h1></div><div class="col"></div>
+        <div class="col"><h6 style="text-align: center">{{ entity.getTrainingName }}</h6></div>
     </div>
+
     <div class="row">
         <div class="d-block p-2 bg-dark text-white btn-block">
         {% trans %}Description{% endtrans %}:
@@ -20,12 +20,11 @@
     </div>
     <br/>
     <div class="row">
-        <div class="col"></div>
-        <div class="col"><h1 style="text-align: center">{% trans %}Exercises{% endtrans %}</h1></div><div class="col"></div>
+        <div class="col"><h4 style="text-align: center">{% trans %}Exercises{% endtrans %}</h4></div>
     </div>
 
     <div class="row">
-        <div class="container card margin">
+        <div class="container card margin" style="word-break: break-all;">
             {% for row in exercises %}
                 <div class="row">
                     <div class="margin col">
@@ -61,12 +60,12 @@
         </div>
     </div>
 
-</div>
     <div class="container">
         <div class="row">
             <a href="{{ path('trainings') }}" class="margin btn btn-secondary btn-block">{% trans %}Back{% endtrans %}</a>
         </div>
     </div>
+
     <div class="container">
         <div class="row">
             <!-- Button trigger modal -->
@@ -76,6 +75,8 @@
         </div>
     </div>
 </div>
+
+
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
