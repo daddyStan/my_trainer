@@ -153,8 +153,7 @@ class ExerciseController extends Controller
                 ->saveExercise(
                     $data['exercise_name'],
                     $data['description'],
-                    $this->getUser(),
-                    null
+                    $this->getUser()
                 );
         }
 

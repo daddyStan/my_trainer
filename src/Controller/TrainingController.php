@@ -131,10 +131,10 @@ class TrainingController extends Controller
         return $this->render('training/index.html.twig', [
             'exercises' => '5464654',
             'form'            => $view,
-            "trainingsCount"  => count($trainingsSearch),
-            "message" => $this->getTrainingRepository()->count([]),
-            "result" => $result,
-            "grid"  => $trainingsSearch,
+            'trainingsCount'  => count($trainingsSearch),
+            'message' => $this->getTrainingRepository()->count([]),
+            'result' => $result,
+            'grid'  => $trainingsSearch,
             'is_training' => $this->getUser()->getDayId()
         ]);
     }

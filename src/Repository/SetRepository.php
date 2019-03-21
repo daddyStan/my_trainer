@@ -18,7 +18,7 @@ class SetRepository extends ServiceEntityRepository
         try {
             $set = new Set();
             $set
-                ->setComment($comment ?? "")
+                ->setComment($comment ?? '')
                 ->setTries($tries)
                 ->setWeight($weight)
                 ->setExerciseId($exerciseId)
@@ -38,38 +38,9 @@ class SetRepository extends ServiceEntityRepository
             $this->getEntityManager()->persist($set);
             $this->getEntityManager()->flush();
 
-            return "Set succesfully saved";
+            return 'Set succesfully saved';
         } catch (\Exception $e) {
             return "ERROR \n $e";
         }
     }
-
-//    /**
-//     * @return User[] Returns an array of User objects
-//     */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('u.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?User
-    {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }
