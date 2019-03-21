@@ -16,24 +16,24 @@ class AppFixtures extends Fixture
         $this->encoder = $encoder;
     }
 
+    /**
+     * @param ObjectManager $manager
+     * @throws \Exception
+     */
     public function load(ObjectManager $manager)
     {
-        // $product = new Product();
-        // $manager->persist($product);
-
         $user = new User();
         $user->setUserName('stan');
 
         $password = $this->encoder->encodePassword($user, 'qweqwe');
         $user->setPassword($password);
 
-        $user->setEmail("sts.ko@mail.com");
+        $user->setEmail('sss@mail.com');
         $user->setIsActive(true);
-        $user->setLastVisitDate(new \DateTime("2018-01-02"));
-        $user->setRegistrationDate(new \DateTime("2018-01-01"));
+        $user->setLastVisitDate(new \DateTime('2018-01-02'));
+        $user->setRegistrationDate(new \DateTime('2018-01-01'));
 
         $manager->persist($user);
-
         $manager->flush();
     }
 }

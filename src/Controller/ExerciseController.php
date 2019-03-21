@@ -154,7 +154,6 @@ class ExerciseController extends Controller
                     $data['exercise_name'],
                     $data['description'],
                     $this->getUser(),
-                    null
                 );
         }
 

@@ -16,7 +16,7 @@ class ExerciseRepository extends ServiceEntityRepository
     }
 
 
-    public function saveExercise($exercise_name, $description, $user, $training_id = null )
+    public function saveExercise($exercise_name, $description, $user )
     {
         try {
             $exercise = new Exercise();
@@ -36,7 +36,7 @@ class ExerciseRepository extends ServiceEntityRepository
             ;
             $this->getEntityManager()->persist($exercise);
             $this->getEntityManager()->flush();
-            return "Exercise succesfully saved";
+            return 'Exercise succesfully saved';
         } catch (\Exception $e) {
             return "ERROR \n $e";
         }
@@ -62,7 +62,7 @@ class ExerciseRepository extends ServiceEntityRepository
 
             $this->getEntityManager()->persist($exercise);
             $this->getEntityManager()->flush();
-            return "Exercise succesfully saved";
+            return 'Exercise succesfully saved';
         } catch (\Exception $e) {
             return "ERROR \n $e";
         }
@@ -86,33 +86,4 @@ class ExerciseRepository extends ServiceEntityRepository
 
         return $exercises;
     }
-
-//    /**
-//     * @return User[] Returns an array of User objects
-//     */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('u.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?User
-    {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }
